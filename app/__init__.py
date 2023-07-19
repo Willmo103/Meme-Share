@@ -50,10 +50,6 @@ login_manager = LoginManager()
 # set the login view for the login manager
 login_manager.login_view = "routes.login"
 
-# Add Jinja2 filter for Markdown conversion
-def markdown_filter(content):
-    return markdown.markdown(content)
-
 
 # create the app factory function and register the blueprints and database
 def create_app():
@@ -78,9 +74,6 @@ def create_app():
 
         # register the blueprints
         app.register_blueprint(routes.endpoint)
-
-        # Register the markdown filter with the app
-        app.jinja_env.filters["markdown"] = markdown_filter
 
         # create the database tables if they do not exist
         db.create_all()
