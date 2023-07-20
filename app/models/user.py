@@ -13,8 +13,8 @@ class User(UserMixin, db.Model):
     username: str = db.Column(db.String(20), unique=True, nullable=False)
     email: str = db.Column(db.String(120), unique=True, nullable=False)
     password: str = db.Column(db.String(60), nullable=False)
-    memes: list = db.relationship("Meme", backref="posted_by", lazy=True)
-    saved_memes: list = db.relationship("Save", backref="user", lazy=True)
+    memes: list = db.relationship("Meme", backref="posted_memes", lazy=True)
+    saved_memes: list = db.relationship("Meme", secondary="saved_memes", lazy="subquery", backref=db.backref("saved_by", lazy=True))
     is_admin: bool = db.Column(db.Boolean, nullable=False, default=False)
 
 

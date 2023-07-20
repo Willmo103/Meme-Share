@@ -42,11 +42,16 @@ class Meme(db.Model):
     def __repr__(self) -> str:
         return f"Meme('{self.id}', '{self.filename}')"
 
-    def create_thumbnail(self, size=(128, 128)):
+    def create_thumbnail(self, size=(350, 350)) -> bool:
         """Create a thumbnail of the meme."""
-        img = Image.open(self.filepath)
-        img.thumbnail(size)
-        img.save(self.thumbnail_path)
+        try:
+            img = Image.open(self.filepath)
+            img.thumbnail(size)
+            img.save(self.thumbnail_path)
+            return True
+        except Exception as err:
+            print(err)
+            return False
 
     @classmethod
     def from_url(cls, url, posted_by, title, private):
