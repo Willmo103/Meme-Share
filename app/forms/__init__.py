@@ -1,2 +1,2 @@
-from .new_user import NewUserForm as NewUserForm
 from .login_form import LoginForm as LoginForm
+from .register_form import RegistrationForm as RegistrationForm

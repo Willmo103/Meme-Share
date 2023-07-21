@@ -1,7 +1,8 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
-import dotenv, os
+import dotenv, os, logging
+from logging.handlers import RotatingFileHandler
 
 # set the project root directory as an environment variable to be used in other modules
 os.environ["PROJECT_ROOT"] = os.path.abspath(
@@ -59,6 +60,27 @@ def create_app():
     # load the app configuration
     app.config.from_object(Config)
 
+    log_level = logging.INFO
+
+    # Define the log file path
+    log_file_path = f"{os.environ['PROJECT_ROOT']}/app.log"
+
+    # Create a log formatter
+    log_formatter = logging.Formatter(
+        "[%(asctime)s] [%(levelname)s] %(message)s",
+        datefmt="%Y-%m-%d %H:%M:%S",
+    )
+
+    # Create a rotating file handler to log messages to the file
+    file_handler = RotatingFileHandler(log_file_path, maxBytes=1000000, backupCount=5)
+    file_handler.setFormatter(log_formatter)
+
+    # Get the app's logger and add the file handler to it
+    app.logger.addHandler(file_handler)
+
+    # Set the log level for the app's logger
+    app.logger.setLevel(log_level)
+
     # initialize the database
     db.init_app(app)
 
@@ -84,3 +106,4 @@ def create_app():
 
 # create the app instance
 app = create_app()
+

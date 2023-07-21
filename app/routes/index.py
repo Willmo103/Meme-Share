@@ -4,7 +4,7 @@ from . import endpoint
 import os
 
 @endpoint.route("/")
-@endpoint.route("/index")
+@endpoint.route("/index", methods=["GET"])
 def index_page():
     if not current_user.is_authenticated and os.environ.get("ENV_MODE") != "dev":
         return redirect(url_for("routes.login"))
