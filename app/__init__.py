@@ -14,6 +14,7 @@ if check_for_dotenv:
     # if the .env file exists, load it into the environment
     dotenv.load_dotenv(dotenv_path=os.environ.get("ENV_PATH"))
     print("loaded environment variables from .env file")
+    os.environ["ENV_MODE"] = "dev"
 else:
     print("Loading environment variables from system.")
 try:
@@ -68,11 +69,11 @@ def create_app():
     with app.app_context():
 
         # import the routes and models modules
-        # from . import routes
+        from . import routes
         from . import models
 
         # register the blueprints
-        # app.register_blueprint(routes.endpoint)
+        app.register_blueprint(routes.endpoint)
 
         # create the database tables if they do not exist
         db.create_all()
