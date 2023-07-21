@@ -13,5 +13,5 @@ def index_page():
     return render_template(
         "index.html",
         user_id=user_id,
-        title="Info_Hub",
+        title="Intragram",
     )
