@@ -13,7 +13,7 @@ class Meme(db.Model):
         db.DateTime, nullable=False, default=datetime.utcnow
     )
     posted_by: int = db.Column(
-        db.Integer, db.ForeignKey("user.id"), nullable=True, default=None
+        db.Integer, db.ForeignKey("user.id"), nullable=True, default=None,
     )
     title: str = db.Column(db.String(100), nullable=False)
     url: str = db.Column(db.String(100), nullable=True, default=None)

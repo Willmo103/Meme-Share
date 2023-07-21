@@ -1,20 +1,23 @@
 from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
 from app import login_manager, db
+from sqlalchemy.orm import Mapped
+from .tables import saved_memes
 import os
+
 
 @login_manager.user_loader
 def load_user(user_id: int):
     return User.query.get(int(user_id))
 
 # create the user model
-class User(UserMixin, db.Model):
+class User(db.Model, UserMixin):
     id: int = db.Column(db.Integer, primary_key=True)
     username: str = db.Column(db.String(20), unique=True, nullable=False)
     email: str = db.Column(db.String(120), unique=True, nullable=False)
     password: str = db.Column(db.String(60), nullable=False)
-    memes: list = db.relationship("Meme", backref="posted_memes", lazy=True)
-    saved_memes: list = db.relationship("Meme", secondary="saved_memes", lazy="subquery", backref=db.backref("saved_by", lazy=True))
+    memes: Mapped[list] = db.relationship("Meme", backref="posted_memes", lazy=True)
+    saved_memes: Mapped[list] = db.relationship("Meme", secondary="saved_memes", lazy="subquery", backref=db.backref("saved_by", lazy=True))
     is_admin: bool = db.Column(db.Boolean, nullable=False, default=False)
 
 

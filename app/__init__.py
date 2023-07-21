@@ -69,7 +69,7 @@ def create_app():
 
         # import the routes and models modules
         # from . import routes
-        # from . import models
+        from . import models
 
         # register the blueprints
         # app.register_blueprint(routes.endpoint)

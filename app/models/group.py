@@ -1,13 +1,14 @@
 from app import db
-
+from sqlalchemy.orm import Mapped
+from .tables import group_members
 
 class Group(db.Model):
     id: int = db.Column(db.Integer, primary_key=True)
     name: str = db.Column(db.String(100), nullable=False)
-    memes: list = db.relationship("Meme", backref="group", lazy=True)
+    memes: Mapped[list] = db.relationship("Meme", backref="group", lazy=True)
     owner: int = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
     private: bool = db.Column(db.Boolean, nullable=False, default=False)
-    members: list = db.relationship("User", secondary="group_members", lazy="subquery", backref=db.backref("groups", lazy=True))
+    members: Mapped[list] = db.relationship("User", secondary="group_members", lazy="subquery", backref=db.backref("groups", lazy=True))
 
 def __init__(self, name: str, owner: int, private: bool) -> None:
         self.name = name
