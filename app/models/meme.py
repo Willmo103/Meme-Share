@@ -8,6 +8,30 @@ _upload_folder = os.environ.get("UPLOAD_FOLDER")
 
 
 class Meme(db.Model):
+    """
+    Create a Meme model.
+
+    This model should have the following attributes:
+    - id (int, primary key)
+    - date_posted (datetime, not nullable, default=datetime.utcnow)
+    - posted_by (int, foreign key to user.id)
+    - url (str, nullable)
+    - filename (str, nullable)
+    - filepath (str, nullable)
+    - thumbnail (str, nullable)
+    - thumbnail_path (str, nullable)
+    - deleted (bool, not nullable, default=False)
+    - private (bool, not nullable, default=False)
+
+    This model should have the following methods:
+    - __init__ (instantiate an object of the class)
+    - __repr__ (return a string representation of the object)
+    - create_thumbnail (create a thumbnail of the meme)
+    - from_url (create a meme from a URL)
+    - from_upload (create a meme from an uploaded file)
+
+    """
+
     id: int = db.Column(db.Integer, primary_key=True)
     date_posted: datetime = db.Column(
         db.DateTime, nullable=False, default=datetime.utcnow
@@ -27,6 +51,16 @@ class Meme(db.Model):
     private: bool = db.Column(db.Boolean, nullable=False, default=False)
 
     def __init__(self, posted_by: int, filename: str, private: bool) -> None:
+        """
+        Instantiate an object of the class.
+
+        @param posted_by: The user who posted the meme.
+        @param filename: The filename of the meme.
+        @param private: Whether the meme is private.
+
+        @return: None
+
+        """
         self.posted_by = posted_by
         self.filename = filename
         self.filepath = os.path.join(_upload_folder, filename)
@@ -36,6 +70,7 @@ class Meme(db.Model):
         self.create_thumbnail()
 
     def __repr__(self) -> str:
+        """Return a string representation of the object."""
         return f"Meme('{self.id}', '{self.filename}')"
 
     def create_thumbnail(self, size=(350, 350)) -> bool:

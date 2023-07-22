@@ -1,5 +1,6 @@
 from app import db
 
+# The following tables are reference tables for the many-to-many relationships
 group_members = db.Table(
     "group_members",
     db.Column("user_id", db.Integer, db.ForeignKey("user.id"), primary_key=True),

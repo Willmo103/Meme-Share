@@ -20,7 +20,6 @@ else:
     print("Loading environment variables from system.")
 try:
     assert os.environ.get("SQLALCHEMY_DATABASE_URI") is not None
-    assert os.environ.get("UPLOAD_FOLDER") is not None
     assert os.environ.get("SECRET_KEY") is not None
     assert os.environ.get("ADMIN_PASSWORD") is not None
 except AssertionError as e:
@@ -29,8 +28,21 @@ except AssertionError as e:
 
 # initialize the app configuration with the utils module and Config class
 class Config:
+    """
+    @field SQLALCHEMY_DATABASE_URI: The URI for the database.
+    @field UPLOADS_FOLDER: The folder where uploaded files are stored.
+    @field THUMBNAILS_FOLDER: The folder where thumbnails are stored.
+    @field SECRET_KEY: The secret key for the app.
+    @field SQLALCHEMY_TRACK_MODIFICATIONS: Whether to track modifications to the database.
+    @field SQLALCHEMY_ECHO: Whether to echo SQL statements to the console.
+    @field ADMIN_PASSWORD: The password for the admin user.
+    """
+
     SQLALCHEMY_DATABASE_URI = os.environ.get("SQLALCHEMY_DATABASE_URI")
-    UPLOADS_FOLDER = os.environ.get("UPLOAD_FOLDER")
+    UPLOADS_FOLDER = os.environ.get("PROJECT_ROOT") + "/app/static/uploads"
+    THUMBNAILS_FOLDER = (
+        os.environ.get("PROJECT_ROOT") + "/app/static/uploads/thumbnails"
+    )
     SECRET_KEY = os.environ.get("SECRET_KEY")
     SQLALCHEMY_TRACK_MODIFICATIONS = (
         os.environ.get("SQLALCHEMY_TRACK_MODIFICATIONS") or False
@@ -38,6 +50,9 @@ class Config:
     SQLALCHEMY_ECHO = os.environ.get("SQLALCHEMY_ECHO") or False
     ADMIN_PASSWORD = os.environ.get("ADMIN_PASSWORD")
 
+
+# create the folder structure for the uploads and thumbnails, if they do not exist
+os.makedirs(Config.THUMBNAILS_FOLDER, exist_ok=True)
 
 # create an instance of the Config class
 conf = Config()
@@ -54,6 +69,10 @@ login_manager.login_view = "routes.login"
 
 # create the app factory function and register the blueprints and database
 def create_app():
+    """
+    Create the app instance and register the blueprints and database.
+    @return: The app instance.
+    """
     # create the flask app instance
     app = Flask(__name__)
 
