@@ -10,6 +10,7 @@ import os
 def load_user(user_id: int):
     return User.query.get(int(user_id))
 
+
 # create the user model
 class User(db.Model, UserMixin):
     id: int = db.Column(db.Integer, primary_key=True)
@@ -17,9 +18,13 @@ class User(db.Model, UserMixin):
     email: str = db.Column(db.String(120), unique=True, nullable=False)
     password: str = db.Column(db.String(60), nullable=False)
     memes: Mapped[list] = db.relationship("Meme", backref="posted_memes", lazy=True)
-    saved_memes: Mapped[list] = db.relationship("Meme", secondary="saved_memes", lazy="subquery", backref=db.backref("saved_by", lazy=True))
+    saved_memes: Mapped[list] = db.relationship(
+        "Meme",
+        secondary="saved_memes",
+        lazy="subquery",
+        backref=db.backref("saved_by", lazy=True),
+    )
     is_admin: bool = db.Column(db.Boolean, nullable=False, default=False)
-
 
     def __init__(self, username: str, email: str, password: str) -> None:
         self.username = username
@@ -43,7 +48,8 @@ class User(db.Model, UserMixin):
     def _set_temp_password(self) -> None:
         import random
         import string
-        temp = ''.join(random.choices(string.ascii_letters + string.digits, k=8))
+
+        temp = "".join(random.choices(string.ascii_letters + string.digits, k=8))
         self.set_password(temp)
         # send the temp password to the user's email
         db.session.commit()
@@ -64,4 +70,6 @@ class User(db.Model, UserMixin):
         db.session.commit()
 
     def admin_login(self, password: str) -> bool:
-        return check_password_hash(os.getenv("ADMIN_PASSWORD"), password) and self.is_admin
+        return (
+            check_password_hash(os.getenv("ADMIN_PASSWORD"), password) and self.is_admin
+        )

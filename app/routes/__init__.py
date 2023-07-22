@@ -1,5 +1,6 @@
 from flask import Blueprint
 from flask_wtf import FlaskForm
+
 # from app.forms import (
 #     FileUploadForm,
 #     BookmarkForm,
@@ -22,4 +23,3 @@ endpoint = Blueprint("routes", __name__)
 
 from .index import index_page as index_page
 from .auth import login as login, logout as logout, register as register
-

@@ -13,7 +13,10 @@ class Meme(db.Model):
         db.DateTime, nullable=False, default=datetime.utcnow
     )
     posted_by: int = db.Column(
-        db.Integer, db.ForeignKey("user.id"), nullable=True, default=None,
+        db.Integer,
+        db.ForeignKey("user.id"),
+        nullable=True,
+        default=None,
     )
     url: str = db.Column(db.String(100), nullable=True, default=None)
     filename: str = db.Column(db.String(100), nullable=True, default=None)
@@ -23,18 +26,14 @@ class Meme(db.Model):
     deleted: bool = db.Column(db.Boolean, nullable=False, default=False)
     private: bool = db.Column(db.Boolean, nullable=False, default=False)
 
-    def __init__(
-        self,
-        posted_by: int,
-        filename: str,
-        private: bool) -> None:
-            self.posted_by = posted_by
-            self.filename = filename
-            self.filepath = os.path.join(_upload_folder, filename)
-            self.thumbnail = f"thumbnail_{filename}"
-            self.thumbnail_path = os.path.join(_upload_folder, "thumbnails", self.thumbnail)
-            self.private = private
-            self.create_thumbnail()
+    def __init__(self, posted_by: int, filename: str, private: bool) -> None:
+        self.posted_by = posted_by
+        self.filename = filename
+        self.filepath = os.path.join(_upload_folder, filename)
+        self.thumbnail = f"thumbnail_{filename}"
+        self.thumbnail_path = os.path.join(_upload_folder, "thumbnails", self.thumbnail)
+        self.private = private
+        self.create_thumbnail()
 
     def __repr__(self) -> str:
         return f"Meme('{self.id}', '{self.filename}')"
@@ -51,20 +50,20 @@ class Meme(db.Model):
             return False
 
     @classmethod
-    def from_url(cls, url, posted_by, title, private):
+    def from_url(cls, url, posted_by, private):
         """Create a meme from a URL."""
         # This method should download the image from the URL, save it to the
         # upload folder, and then create a Meme object with the filename of
         # the saved image.
         # ...code to download image...
         filename = ...  # the filename of the downloaded image
-        return cls(posted_by, title, filename, private)
+        return cls(posted_by, filename, private)
 
     @classmethod
-    def from_upload(cls, file, posted_by, title, private):
+    def from_upload(cls, file, posted_by, private):
         """Create a meme from an uploaded file."""
         # This method should save the uploaded file to the upload folder,
         # and then create a Meme object with the filename of the saved file.
         # ...code to save uploaded file...
         filename = ...  # the filename of the saved file
-        return cls(posted_by, title, filename, private)
+        return cls(posted_by, filename, private)

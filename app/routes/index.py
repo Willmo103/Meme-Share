@@ -3,6 +3,7 @@ from flask_login import current_user
 from . import endpoint
 import os
 
+
 @endpoint.route("/")
 @endpoint.route("/index", methods=["GET"])
 def index_page():
