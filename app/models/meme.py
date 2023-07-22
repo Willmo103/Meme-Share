@@ -15,7 +15,6 @@ class Meme(db.Model):
     posted_by: int = db.Column(
         db.Integer, db.ForeignKey("user.id"), nullable=True, default=None,
     )
-    title: str = db.Column(db.String(100), nullable=False)
     url: str = db.Column(db.String(100), nullable=True, default=None)
     filename: str = db.Column(db.String(100), nullable=True, default=None)
     filepath: str = db.Column(db.String(100), nullable=True, default=None)
@@ -27,11 +26,9 @@ class Meme(db.Model):
     def __init__(
         self,
         posted_by: int,
-        title: str,
         filename: str,
         private: bool) -> None:
             self.posted_by = posted_by
-            self.title = title
             self.filename = filename
             self.filepath = os.path.join(_upload_folder, filename)
             self.thumbnail = f"thumbnail_{filename}"
