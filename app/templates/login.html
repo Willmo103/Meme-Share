@@ -1,4 +1,68 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
+
 {% block content %}
-    <h1>Login Page</h1>
+<div class="mx-auto mt-20 bg-white dark:bg-gray-800 shadow-md rounded px-8 pt-6 pb-8 mb-4 max-w-4xl border-2 border-gray-200 dark:border-gray-700">
+  <div class="flex items-center mb-8">
+    <h1 class="text-2xl">{{ title }}</h1>
+  </div>
+  <form id="userForm" method="POST">
+    <div class="mb-4">
+      <h2 id="formTitle" class="block text-gray-700 dark:text-white text-lg font-bold mb-4 text-center">Login</h2>
+      <label class="block text-gray-700 dark:text-white text-sm font-bold mb-2" for="username">
+        Username
+      </label>
+      <input class="shadow appearance-none border rounded w-full py-1 px-3 text-gray-700 dark:text-gray-300 leading-tight focus:outline-none focus:shadow-outline mb-4" id="username" type="text" placeholder="Username" name="username" required>
+    </div>
+    <div class="mb-6">
+      <label class="block text-gray-700 dark:text-white text-sm font-bold mb-2" for="password">
+        Password
+      </label>
+      <input class="shadow appearance-none border rounded w-full py-1 px-3 text-gray-700 dark:text-gray-300 mb-3 leading-tight focus:outline-none focus:shadow-outline mb-4" id="password" type="password" placeholder="******************" name="password" required>
+    </div>
+    <div class="mb-6 hidden" id="emailDiv">
+      <label class="block text-gray-700 dark:text-white text-sm font-bold mb-2" for="email">
+        Email
+      </label>
+      <input class="shadow appearance-none border rounded w-full py-1 px-3 text-gray-700 dark:text-gray-300 mb-3 leading-tight focus:outline-none focus:shadow-outline mb-4" id="email" type="email" placeholder="Email" name="email">
+    </div>
+    <div class="mb-6 hidden" id="confirmPasswordDiv">
+      <label class="block text-gray-700 dark:text-white text-sm font-bold mb-2" for="confirm_password">
+        Confirm Password
+      </label>
+      <input class="shadow appearance-none border rounded w-full py-1 px-3 text-gray-700 dark:text-gray-300 mb-3 leading-tight focus:outline-none focus:shadow-outline mb-4" id="confirm_password" type="password" placeholder="Confirm Password" name="confirm_password">
+    </div>
+    <div class="flex items-center justify-between">
+      <div class="flex items-center">
+        <input class="mt-5" type="checkbox" id="registerCheckbox" name="register" value="register">
+        <label for="register" class="ml-2">&nbsp;Register</label>
+      </div>
+      <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
+        Sign In
+      </button>
+    </div>
+  </form>
+</div>
+
+<script>
+    const form = document.getElementById('userForm');
+    const formLogo = document.getElementById('formLogo');
+    const registerCheckbox = document.getElementById('registerCheckbox');
+    const formTitle = document.getElementById('formTitle');
+    const emailDiv = document.getElementById('emailDiv');
+    const confirmPasswordDiv = document.getElementById('confirmPasswordDiv');
+
+    registerCheckbox.addEventListener('change', (event) => {
+      if (event.target.checked) {
+        form.action = "{{ url_for('routes.register') }}";
+        formTitle.innerText = 'New User';
+        emailDiv.classList.remove('hidden');
+        confirmPasswordDiv.classList.remove('hidden');
+      } else {
+        form.action = "{{ url_for('routes.login') }}";
+        formTitle.innerText = 'Login';
+        emailDiv.classList.add('hidden');
+        confirmPasswordDiv.classList.add('hidden');
+      }
+    });
+</script>
 {% endblock %}

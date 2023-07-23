@@ -48,4 +48,4 @@ def register():
         if User.query.count() == 1:
             flash("You are the first user, so you are an admin.")
         return redirect(url_for("routes.login"))
-    return render_template("register.html", title="Register", form=form)
+    return render_template("login.html", title="Register", form=form)
