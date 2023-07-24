@@ -18,6 +18,7 @@ def user_id(id):
     user = User.query.get_or_404(id)
     return render_template("user.html", user=user)
 
+
 @endpoint.route("/user/new", methods=["POST"])
 def new_user():
     form = RegistrationForm()
@@ -29,6 +30,7 @@ def new_user():
         flash("Congratulations, you are now a registered user!")
         return redirect(url_for("endpoint.login"))
     return redirect(url_for("endpoint.login"))
+
 
 @endpoint.route("/user/<int:id>/edit", methods=["GET", "POST"])
 @login_required
@@ -50,6 +52,7 @@ def edit_user(id):
     else:
         flash("You are not authorized to edit this user.")
         return redirect(url_for("endpoint.index"))
+
 
 @endpoint.route("/user/<int:id>/delete", methods=["POST"])
 @login_required

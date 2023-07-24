@@ -1,3 +1,6 @@
+# filename: app\models\meme.py
+# Model for the Meme class
+
 from PIL import Image
 from app import db
 from datetime import datetime
@@ -49,6 +52,7 @@ class Meme(db.Model):
     thumbnail_path: str = db.Column(db.String(100), nullable=True, default=None)
     deleted: bool = db.Column(db.Boolean, nullable=False, default=False)
     private: bool = db.Column(db.Boolean, nullable=False, default=False)
+    group_id: int = db.Column(db.Integer, db.ForeignKey('group.id'), nullable=True)
 
     def __init__(self, posted_by: int, filename: str, private: bool) -> None:
         """

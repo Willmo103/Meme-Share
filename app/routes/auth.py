@@ -38,14 +38,8 @@ def register():
         return redirect(url_for("routes.index_page"))
     form = RegistrationForm()
     if form.validate_on_submit():
-        user = User(username=form.username.data, email=form.email.data)
-        user.set_password(form.password.data)
-        first_admin = User.query.filter_by(is_admin=True).first()
-        if not first_admin:
-            user.is_admin = True
+        user = User(username=form.username.data, email=form.email.data, password=form.password.data)
         user.save()
         flash(f"New user {form.username.data} has been created!")
-        if User.query.count() == 1:
-            flash("You are the first user, so you are an admin.")
         return redirect(url_for("routes.login"))
-    return render_template("login.html", title="Register", form=form)
+    return render_template("new_user.html", title="Register", form=form)
