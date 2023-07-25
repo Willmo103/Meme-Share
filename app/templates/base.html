@@ -7,22 +7,10 @@
     <title>{{ title }}</title>
     <link class="" href="{{url_for('static', filename='css/output.css')}}" rel="stylesheet">
     <!-- Site Icon -->
-    <link id="favicon" rel="icon" type="image/png">
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/intragram_logo_light.png') }}">
 </head>
 
-<body class="bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-white">
-    <script>
-        // Check if the user's system color scheme is set to dark mode
-        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-            // If system is in dark mode, add the "dark" class
-            document.body.classList.add('dark');
-            // Use the dark mode favicon
-            document.getElementById('favicon').href = "{{ url_for('static', filename='images/intragram_logo_light.png') }}";
-        } else {
-            // Use the light mode favicon
-            document.getElementById('favicon').href = "{{ url_for('static', filename='images/intragram_logo.png') }}";
-        }
-    </script>
+<body class="bg-blue-500 dark:bg-gray-800 text-gray-800 dark:text-white">
     <nav class="bg-gray-800 dark:bg-gray-700 p-2 mt-0 w-full">
         <!-- This is the main heading -->
         <div class="container mx-auto flex flex-wrap items-center">
@@ -57,7 +45,7 @@
         </div>
     </nav>
     <!-- Main Content -->
-    <div class="container mx-auto flex flex-wrap py-6">
+    <div class="w ">
         {% block content %}{% endblock %}
     </div>
 </body>
