@@ -1,24 +1,12 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="h-screen w-screen bg-gray-100 dark:bg-gray-800 flex flex-col justify-center items-center">
-  <div class="bg-grey-50 border border-gray-300 w-80 py-8 flex items-center flex-col mb-3">
-    <img src="{{ url_for('static', filename='images/small_intragram_logo_light.png') }}"
-      class="h-16 w-64 mb-6 dark:hidden">
-    <img src="{{ url_for('static', filename='images/small_intragram_logo.png') }}"
-      class="h-16 w-64 mb-6 hidden dark:inline">
-    <form class="mt-8 w-auto flex flex-col">
-      {% block form_content %}{% endblock %}
-    </form>
-    <div class="flex justify-evenly space-x-2 w-64 mt-4">
-      <span class="bg-gray-300 h-px flex-grow t-2 relative top-2"></span>
-      <span class="flex-none uppercase text-xs text-gray-400 font-semibold">or</span>
-      <span class="bg-gray-300 h-px flex-grow t-2 relative top-2"></span>
-    </div>
-  </div>
-  <div class="bg-white border border-gray-300 text-center w-80 py-4">
-    <span class="text-sm">Don't have an account?</span>
-    <a href="{{ url_for('routes.register') }}" class="text-blue-500 text-sm font-semibold">Sign up</a>
-  </div>
-</div>
+
+{{ form.username(class="text-xs w-full mb-2 rounded border bg-gray-100 border-gray-300 px-2 py-2 focus:outline-none
+focus:border-gray-400 active:outline-none", placeholder="Phone number, username, or email") }}
+{{ form.password(class="text-xs w-full mb-4 rounded border bg-gray-100 border-gray-300 px-2 py-2 focus:outline-none
+focus:border-gray-400 active:outline-none", placeholder="Password") }}
+{{ form.remember_me(class="mb-4") }} Remember me
+{{ form.submit(class="text-sm text-center bg-blue-300 text-white py-1 rounded font-medium", value="Log In") }}
+
 {% endblock %}
