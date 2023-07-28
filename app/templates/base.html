@@ -46,16 +46,7 @@
         </div>
     </nav>
     <!-- Main Content -->
-    <div class="container mx-auto flex flex-wrap items-center bg-cyan-700 min-h-screen p-2 mt-2">
-        <div class="flex w-full md:1/2 justify-center">
-            <form class="flex max-w-screen-md pt-4 content-center justify-evenly">
-                <label for="username">Username</label>
-                <input type="text" name="username" id="unsename"
-                    class="border-spacing-7 border-gray-400 hover:border-gray-600" placeholder="username">
-                SOME TEST
-            </form>
-        </div>
-    </div>
+    {% block content %}{% endblock %}
 </body>
 
 </html>

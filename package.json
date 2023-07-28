@@ -1,4 +1,8 @@
 {
+  "scripts": {
+    "css_build": "tailwindcss -i ./app/static/css/styles.css -o ./app/static/css/output.css",
+    "css_watch": "tailwindcss -i ./app/static/css/styles.css -o ./app/static/css/output.css --watch"
+  },
   "dependencies": {
     "tailwindcss": "^3.3.3"
   },
