@@ -8,18 +8,25 @@
     <link class="" href="{{url_for('static', filename='css/output.css')}}" rel="stylesheet">
     <link class="" href="../static/css/output.css" rel="stylesheet">
     <!-- Site Icon -->
-    <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/intragram_logo_light.png') }}">
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/intragram_logo_darkmode.png') }}"
+        class="hidden dark:block">
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/intragram_logo_lightmode.png') }}"
+        class="dark:hidden">
 </head>
 
-<body>
-    <nav class="bg-gray-800 dark:bg-gray-700 p-2 mt-0 w-full">
+<body class="dark:bg-gray-900 bg-white text-gray-900 dark:text-gray-100">
+    <nav class="bg-gray-300 dark:bg-gray-600 p-2 mt-0 w-full">
         <!-- This is the main heading -->
         <div class="container mx-auto flex flex-wrap items-center">
-            <div class="flex w-full md:w-1/2 justify-center md:justify-start text-white font-extrabold">
-                <a class="flex items-center text-white no-underline hover:text-white hover:no-underline"
+            <div class="flex w-full md:w-1/2 justify-center md:justify-start text-black dark:text-white font-extrabold">
+                <a class="flex items-center text-grey-600 dark:text-white no-underline hover:text-white hover:no-underline"
                     href="{{ url_for('routes.index_page') }}">
-                    <img id="navbar-logo" src="{{ url_for('static', filename='images/intragram_logo_light.png') }}"
-                        height="32" width="32" alt="Site Icon" class="mr-2">
+                    <img id="navbar-logo-light" class="dark:hidden"
+                        src="{{ url_for('static', filename='images/intragram_logo_lightmode.png') }}" height="32"
+                        width="32" alt="Site Icon" class="mr-2">
+                    <img id="navbar-logo-dark" class="hidden dark:block"
+                        src="{{ url_for('static', filename='images/intragram_logo_darkmode.png') }}" height="32"
+                        width="32" alt="Site Icon" class="mr-2">
                     <span class="text-2xl">&nbsp;{{ title }}</span>
                 </a>
             </div>
@@ -28,16 +35,16 @@
                     <!-- Check if user is authenticated -->
                     {% if current_user.is_authenticated %}
                     <li class="mr-3">
-                        <a class="inline-block text-white no-underline hover:text-gray-200 hover:text-underline py-2 px-4"
+                        <a class="inline-block text-grey-600 dark:text-white no-underline hover:text-gray-300 hover:text-underline py-2 px-4"
                             href="#">Profile</a>
                     </li>
                     <li class="mr-3">
-                        <a class="inline-block text-white no-underline hover:text-gray-200 hover:text-underline py-2 px-4"
+                        <a class="inline-block text-grey-600 dark:text-white no-underline hover:text-gray-200 hover:text-underline py-2 px-4"
                             href="{{url_for('routes.logout')}}">Logout</a>
                     </li>
                     {% else %}
                     <li class="mr-3">
-                        <a class="inline-block text-white no-underline hover:text-gray-200 hover:text-underline py-2 px-4"
+                        <a class="inline-block text-grey-600 dark:text-white no-underline hover:text-gray-200 hover:text-underline py-2 px-4"
                             class="nav-link" href="{{ url_for('routes.login') }}">Login</a>
                     </li>
                     {% endif %}

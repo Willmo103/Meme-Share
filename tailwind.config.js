@@ -1,9 +1,5 @@
 module.exports = {
-  content: [
-    './app/templates/**/*.html',
-    './app/static/css/**/*.css'
-  ],
-  darkMode: 'class',
+  content: ["./app/templates/**/*.html", "./app/static/css/**/*.css"],
   theme: {
     extend: {},
   },
@@ -11,4 +7,4 @@ module.exports = {
     extend: {},
   },
   plugins: [],
-}
+};
