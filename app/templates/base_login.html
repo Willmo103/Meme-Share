@@ -1,17 +1,18 @@
 {% extends "base.html" %}
 {% block content %}
 <div class="min-h-screen py-6 w-auto bg-gray-100 dark:bg-gray-800 flex flex-col justify-center items-center">
-    <div class="bg-grey-50 border border-gray-300 border-rounded w-80 py-8 flex items-center flex-col mb-3 mt-6">
+    <div
+        class="bg-grey-50 border rounded border-gray-300 dark:border-black w-80 py-8 flex items-center flex-col mb-3 mt-6">
         <img src="{{ url_for('static', filename='images/small_intragram_logo_darkmode.png') }}"
-            class="h-16 w-16 mb-1 dark:hidden">
-        <img src="{{ url_for('static', filename='images/small_intragram_logo_lightmode.png') }}"
             class="h-16 w-16 mb-1 hidden dark:inline">
+        <img src="{{ url_for('static', filename='images/small_intragram_logo_lightmode.png') }}"
+            class="h-16 w-16 mb-1 dark:hidden">
         <form class="mt-8 w-auto flex flex-col">
             {%block form_content%} {%endblock%}
         </form>
     </div>
-    <div class="bg-white border border-gray-300 text-center w-80 py-4 mb-6">
-        <span class="text-sm">Don't have an account?</span>
+    <div class="bg-white dark:bg-gray-700 border border-gray-300 dark:border-black text-center w-80 py-4 mb-6">
+        <span class="text-sm text-black">Don't have an account?</span>
         <a href="{{ url_for('routes.register') }}" class="text-blue-500 text-sm font-semibold">Sign up</a>
     </div>
 </div>

@@ -38,7 +38,11 @@ def register():
         return redirect(url_for("routes.index_page"))
     form = RegistrationForm()
     if form.validate_on_submit():
-        user = User(username=form.username.data, email=form.email.data, password=form.password.data)
+        user = User(
+            username=form.username.data,
+            email=form.email.data,
+            password=form.password.data,
+        )
         user.save()
         flash(f"New user {form.username.data} has been created!")
         return redirect(url_for("routes.login"))
