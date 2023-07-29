@@ -1,0 +1,19 @@
+version: "3.9"
+
+services:
+  postgres:
+    image: postgres:latest
+    container_name: meme_share_db
+    environment:
+      POSTGRES_USER: meme_share_dev
+      POSTGRES_DB: meme_share_dev
+      POSTGRES_PASSWORD: your_postgres_password_here
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    expose:
+      - "5432"
+
+volumes:
+  pg_data:

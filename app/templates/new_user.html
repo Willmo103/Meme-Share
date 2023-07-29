@@ -1,18 +1,32 @@
-{% extends "base_login.html" %}
-{% block form_content %}
-
-{{ form.hidden_tag() }}
-{{ form.username(class=" text-xs w-full mb-2 rounded border bg-gray-100 border-gray-300 px-2 py-2
-focus:outline-none
-focus:border-gray-400 active:outline-none", placeholder="Username") }}
-{{ form.email(class=" text-xs w-full mb-2 rounded border bg-gray-100 border-gray-300 px-2 py-2
-focus:outline-none
-focus:border-gray-400 active:outline-none", placeholder="Email") }}
-{{ form.password(class=" text-xs w-full mb-2 rounded border bg-gray-100 border-gray-300 px-2 py-2
-focus:outline-none
-focus:border-gray-400 active:outline-none", placeholder="Password") }}
-{{ form.confirm_password(class=" text-xs w-full mb-2 rounded border bg-gray-100 border-gray-300 px-2 py-2
-focus:outline-none focus:border-gray-400 active:outline-none", placeholder="Confirm Password") }}
-{{ form.submit(class="text-sm text-center bg-blue-300 text-white py-1 rounded font-medium", value="Sign Up")
-}}
+{% extends "base.html" %}
+{% block content %}
+<div class="min-h-screen py-3 w-auto bg-gray-100 dark:bg-gray-800 flex flex-col justify-center items-center">
+    <div
+        class="bg-grey-50 border rounded border-gray-300 dark:border-black w-80 py-6 flex items-center flex-col mb-3 mt-3">
+        <h1 class="text-6xl font-billabong text-black dark:text-white mb-2">{{ title }}</h1>
+        <form class="mt-8 w-auto flex flex-col" action="{{ url_for('routes.register') }}" method="POST">
+            {{ form.hidden_tag() }}
+            {{ form.username(class="text-xs w-full mb-2 rounded border bg-gray-100 dark:bg-gray-700 border-gray-300
+            dark:border-black px-2 py-2
+            focus:outline-none
+            focus:border-gray-400 active:outline-none text-black dark:text-gray-300", placeholder="Username") }}
+            {{ form.email(class= "text-xs w-full mb-2 rounded border bg-gray-100 dark:bg-gray-700 border-gray-300
+            dark:border-black px-2 py-2
+            focus:outline-none
+            focus:border-gray-400 active:outline-none text-black dark:text-gray-300", placeholder="Email") }}
+            {{ form.password(class="text-xs w-full mb-2 rounded border bg-gray-100 dark:bg-gray-700 border-gray-300
+            dark:border-black px-2 py-2
+            focus:outline-none
+            focus:border-gray-400 active:outline-none text-black dark:text-gray-300", placeholder="Password") }}
+            {{ form.confirm_password(class="text-xs w-full mb-2 rounded border bg-gray-100 dark:bg-gray-700
+            border-gray-300
+            dark:border-black px-2 py-2
+            focus:outline-none
+            focus:border-gray-400 active:outline-none text-black dark:text-gray-300", placeholder="Confirm Password") }}
+            {{ form.submit(class="text-sm text-center bg-blue-300 dark:bg-gray-400 text-white py-1 rounded font-medium",
+            value="Regester")
+            }}
+        </form>
+    </div>
+</div>
 {% endblock %}
