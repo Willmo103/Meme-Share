@@ -125,4 +125,3 @@ def create_app():
 
 # create the app instance
 app = create_app()
-logger = app.logger

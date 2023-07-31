@@ -6,3 +6,5 @@
     font-family: 'billabong';
     src: url('../fonts/billabong.ttf');
 }
+
+@import 'fontawesome-free/css/all.css';

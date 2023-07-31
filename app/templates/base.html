@@ -7,24 +7,25 @@
     <title>{{ title }}</title>
     <link class="" href="{{url_for('static', filename='css/output.css')}}" rel="stylesheet">
     <link class="" href="../static/css/output.css" rel="stylesheet">
+    <link class="" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <!-- Site Icon -->
     <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/intragram_logo_darkmode.png') }}"
         class="dark:hidden">
 </head>
 
-<body class="dark:bg-gray-900 bg-white text-gray-900 dark:text-gray-100">
+<body class="dark:bg-gray-800 bg-white text-gray-900 dark:text-gray-100">
     <nav class="bg-gray-300 dark:bg-gray-600 p-2 mt-0 w-full">
         <!-- This is the main heading -->
         <div class="container mx-auto flex flex-wrap items-center">
-            <div class="flex w-full md:w-1/2 justify-center md:justify-start text-black dark:text-white font-extrabold">
+            <div class="flex w-full md:w-1/2 justify-center md:justify-start text-black dark:text-white">
                 <a class="flex items-center text-grey-600 dark:text-white no-underline hover:text-white hover:no-underline"
                     href="{{ url_for('routes.index_page') }}">
                     <img id="navbar-logo-light" class="dark:hidden"
-                        src="{{ url_for('static', filename='images/intragram_logo_lightmode.png') }}" height="32"
-                        width="32" alt="Site Icon" class="mr-2">
+                        src="{{ url_for('static', filename='images/intragram_logo_lightmode.png') }}" height="38"
+                        width="38" alt="Site Icon" class="mr-2 mb-1">
                     <img id="navbar-logo-dark" class="hidden dark:block"
-                        src="{{ url_for('static', filename='images/intragram_logo_darkmode.png') }}" height="32"
-                        width="32" alt="Site Icon" class="mr-2">
+                        src="{{ url_for('static', filename='images/intragram_logo_darkmode.png') }}" height="38"
+                        width="38" alt="Site Icon" class="mr-2 mb-1">
                     <span class="text-4xl font-billabong">&nbsp;&nbsp;Intragram</span>
                 </a>
             </div>
@@ -43,7 +44,7 @@
                     {% else %}
                     <li class="mr-3">
                         <a class="inline-block text-grey-600 dark:text-white no-underline hover:text-gray-200 hover:text-underline py-2 px-4"
-                            class="nav-link" href="{{ url_for('routes.login') }}">Login</a>
+                            class="nav-link" href="{{ url_for('routes.login') }}">Sign In</a>
                     </li>
                     {% endif %}
                 </ul>

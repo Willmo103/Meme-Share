@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% block content %}
-<div class="min-h-screen py-3 w-auto bg-gray-100 dark:bg-gray-800 flex flex-col justify-center items-center">
+<div class="h-auto py-4 w-auto bg-gray-100 dark:bg-gray-800 flex flex-col justify-center items-center">
     <div
         class="bg-grey-50 border rounded border-gray-300 dark:border-black w-80 py-6 flex items-center flex-col mb-3 mt-3">
         <h1 class="text-6xl font-billabong text-black dark:text-white mb-2">{{ title }}</h1>
@@ -20,7 +20,7 @@
                 <label for="{{ form.remember_me.id }}" class="ml-2">Remember me</label>
             </div>
             {{ form.submit(class="text-sm text-center bg-blue-300 dark:bg-gray-400 text-white py-1 rounded font-medium",
-            value="Log In")
+            value="Sign In")
             }}
         </form>
     </div>
