@@ -1,5 +1,5 @@
-# filename: app\models\meme.py
-# Model for the Meme class
+# filename: meme.py
+# filepath: app\models\meme.py
 
 from PIL import Image
 from app import db
@@ -186,10 +186,6 @@ class Meme(db.Model):
     def get_seen_by(self) -> list:
         """Get the users who have seen the meme."""
         return self.seen_by
-
-    def get_comments(self) -> list:
-        """Get the comments on the meme."""
-        return self.comments
 
     def update(self) -> None:
         """Update the meme in the database."""

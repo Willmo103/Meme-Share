@@ -18,3 +18,9 @@ seen_memes = db.Table(
     db.Column("user_id", db.Integer, db.ForeignKey("user.id"), primary_key=True),
     db.Column("meme_id", db.Integer, db.ForeignKey("meme.id"), primary_key=True),
 )
+
+posted_comments = db.Table(
+    "posted_comments",
+    db.Column("user_id", db.Integer, db.ForeignKey("user.id"), primary_key=True),
+    db.Column("comment_id", db.Integer, db.ForeignKey("comment.id"), primary_key=True),
+)

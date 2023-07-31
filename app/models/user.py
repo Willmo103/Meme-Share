@@ -1,3 +1,6 @@
+# filename: user.py
+# filepath: app\models\user.py
+
 from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
 from app import login_manager, db
@@ -50,6 +53,9 @@ class User(db.Model, UserMixin):
         backref=db.backref("saved_by", lazy=True),
     )
     is_admin: bool = db.Column(db.Boolean, nullable=False, default=False)
+    comments: Mapped[list] = db.relationship(
+        "Comment", backref="posted_comments", lazy=True
+    )
 
     def __init__(self, username: str, email: str, password: str) -> None:
         """

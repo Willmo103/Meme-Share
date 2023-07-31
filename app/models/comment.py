@@ -1,3 +1,6 @@
+# filename: comment.py
+# filepath: app\models\comment.py
+
 from datetime import datetime
 from app import db
 
@@ -34,9 +37,7 @@ class Comment(db.Model):
     meme_id: int = db.Column(db.Integer, db.ForeignKey("meme.id"), nullable=False)
     content: str = db.Column(db.String(1000), nullable=False)
 
-    def __init__(
-        self, posted_by: int, meme_id: int, content: str, date_posted: datetime = None
-    ) -> None:
+    def __init__(self, posted_by: int, meme_id: int, content: str) -> None:
         """
         Instantiate an object of the class.
         @param posted_by: The user who posted the comment.
@@ -48,8 +49,6 @@ class Comment(db.Model):
         self.posted_by = posted_by
         self.meme_id = meme_id
         self.content = content
-        if date_posted is not None:
-            self.date_posted = date_posted
 
     def __repr__(self) -> str:
         """
