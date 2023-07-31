@@ -4,7 +4,6 @@
     "css_watch": "tailwindcss -i ./app/static/css/styles.css -o ./app/static/css/output.css --watch"
   },
   "dependencies": {
-    "fontawesome-free": "^1.0.4",
     "tailwindcss": "^3.3.3"
   },
   "devDependencies": {

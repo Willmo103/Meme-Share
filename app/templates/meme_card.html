@@ -1,0 +1,52 @@
+<li>
+    <div class="h-auto px-2 py-1 mt-1">
+        <div class="max-w-md mx-auto bg-white dark:bg-black shadow-lg rounded-md overflow-hidden md:max-w-md">
+            <div class="md:flex">
+                <div class="w-full">
+                    <div class="flex justify-between items-center p-3">
+                        <div class="flex flex-row items-center">
+                            <img src="https://picsum.photos/400" class="rounded-full" width="40">
+                            <div class="flex flex-row items-center ml-2">
+                                <a href="#"><span class="font-bold mr-1 text-black dark:text-white">User
+                                        Name</span></a>
+                            </div>
+                        </div>
+                        <div class="pr-2">
+                            <i
+                                class="fa fa-ellipsis-h text-gray-400 hover:text-gray-600 dark:text-white hover:cursor-pointer dark:hover:text-gray-400"></i>
+                        </div>
+                    </div>
+                    <div>
+                        <a href="#">
+                            <img src="https://picsum.photos/400" class="w-auto h-75">
+                        </a>
+                    </div>
+                    <div class="p-4 flex justify-between items-center">
+                        <div class="flex flex-row items-center">
+                            {% if current_user.is_authenticated %}
+                            <i
+                                class="fas fa-heart mr-3 text-gray-400 hover:text-gray-600 dark:text-white hover:cursor-pointer dark:hover:text-gray-400"></i>
+                            {% else %}
+                            <i
+                                class="far fa-heart mr-3 text-gray-400 hover:text-gray-600 dark:text-white hover:cursor-pointer dark:hover:text-gray-400"></i>
+                            {% endif %}
+                            <i
+                                class="far fa-comment mr-3 text-gray-400 hover:text-gray-600 dark:text-white hover:cursor-pointer dark:hover:text-gray-400"></i>
+                            <i
+                                class="far fa-paper-plane mr-3 text-gray-400 hover:text-gray-600 dark:text-white hover:cursor-pointer dark:hover:text-gray-400"></i>
+                        </div>
+                        <div>
+                            {% if current_user.is_authenticated %}
+                            <i
+                                class="fas fa-bookmark text-gray-400 hover:text-gray-600 dark:text-white hover:cursor-pointer dark:hover:text-gray-400"></i>
+                            {% else %}
+                            <i
+                                class="far fa-bookmark text-gray-400 hover:text-gray-600 dark:text-white hover:cursor-pointer dark:hover:text-gray-400"></i>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</li>

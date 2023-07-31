@@ -1,72 +1,8 @@
 {% extends 'base.html' %}
 {% block content %}
 <ul class="flex justify-between items-center flex-col py-3 mb-3 mt-3 bg-green-500">
-    <li>
-
-        <div class="h-screen px-2">
-
-            <div class="max-w-md mx-auto bg-white shadow-lg rounded-md overflow-hidden md:max-w-md">
-
-                <div class="md:flex">
-
-                    <div class="w-full">
-
-                        <div class="flex justify-between items-center p-3">
-
-                            <div class="flex flex-row items-center">
-
-                                <img src="https://picsum.photos/400" class="rounded-full" width="40">
-
-                                <div class="flex flex-row items-center ml-2">
-
-                                    <span class="font-bold mr-1 text-black">Mautic War</span>
-
-                                    <small class="h-1 w-1 bg-gray-300 rounded-full mr-1 mt-1"></small>
-                                    <a href="#"
-                                        class="text-blue-600 dark:text-blue-400 text-sm hover:text-blue-800 dark:hover:text-blue-600">Follow</a>
-
-                                </div>
-
-                            </div>
-
-                            <div class="pr-2">
-
-                                <i class="fa fa-ellipsis-h text-gray-400 hover:cursor-pointer hover:text-gray-600"></i>
-
-                            </div>
-
-
-
-                        </div>
-
-
-                        <div>
-                            <a href="#">
-                                <img src="https://picsum.photos/400" class="w-full h-75">
-                            </a>
-                        </div>
-
-
-                        <div class="p-4 flex justify-between items-center">
-
-                            <div class="flex flex-row items-center">
-
-                                <i class="fas fa-heart mr-2 hover:text-gray-800"></i>
-                                <i class="fas fa-comment mr-2 hover:text-gray-800"></i>
-                                <i class="fas fa-send mr-2 hover:text-gray-800"></i>
-
-                            </div>
-
-                            <div>
-                                <i class="fas fa-bookmark hover:text-gray-800">
-    </li>
-    </div>
-
-    </div>
-    </div>
-    </div>
-    </div>
-    </div>
-    </li>
+    {% for meme in range(5) %}
+    {% include 'meme_card.html' %}
+    {% endfor %}
 </ul>
 {% endblock %}
