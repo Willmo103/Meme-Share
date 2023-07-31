@@ -12,3 +12,9 @@ saved_memes = db.Table(
     db.Column("user_id", db.Integer, db.ForeignKey("user.id"), primary_key=True),
     db.Column("meme_id", db.Integer, db.ForeignKey("meme.id"), primary_key=True),
 )
+
+seen_memes = db.Table(
+    "seen_memes",
+    db.Column("user_id", db.Integer, db.ForeignKey("user.id"), primary_key=True),
+    db.Column("meme_id", db.Integer, db.ForeignKey("meme.id"), primary_key=True),
+)

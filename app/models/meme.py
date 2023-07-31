@@ -4,7 +4,7 @@
 from PIL import Image
 from app import db
 from datetime import datetime
-from sqlalchemy import or_
+from sqlalchemy.orm import Mapped
 import os
 
 _upload_folder = os.environ.get("UPLOAD_FOLDER")
@@ -32,7 +32,25 @@ class Meme(db.Model):
     - create_thumbnail (create a thumbnail of the meme)
     - from_url (create a meme from a URL)
     - from_upload (create a meme from an uploaded file)
-
+    - check_seen_by_user (check if a user has seen the meme)
+    - seen_by_user (add a user to the list of users who have seen the meme)
+    - get_comments (return the comments on the meme)
+    - save (save the meme to the database)
+    - delete (delete the meme from the database)
+    - get_id (get the id of the meme)
+    - get_date_posted (get the date posted of the meme)
+    - get_posted_by (get the user who posted the meme)
+    - get_url (get the URL of the meme)
+    - get_filename (get the filename of the meme)
+    - get_filepath (get the filepath of the meme)
+    - get_thumbnail (get the thumbnail of the meme)
+    - get_thumbnail_path (get the thumbnail path of the meme)
+    - get_deleted (get whether the meme is deleted)
+    - get_private (get whether the meme is private)
+    - get_group_id (get the id of the group the meme is in)
+    - get_seen_by (get the users who have seen the meme)
+    - get_comments (get the comments on the meme)
+    - update (update the meme in the database)
     """
 
     id: int = db.Column(db.Integer, primary_key=True)
@@ -53,6 +71,15 @@ class Meme(db.Model):
     deleted: bool = db.Column(db.Boolean, nullable=False, default=False)
     private: bool = db.Column(db.Boolean, nullable=False, default=False)
     group_id: int = db.Column(db.Integer, db.ForeignKey("group.id"), nullable=True)
+    seen_by: Mapped[list] = db.relationship(
+        "User",
+        secondary="seen_memes",
+        lazy="subquery",
+        backref=db.backref("seen_memes", lazy=True),
+    )
+    comments: Mapped[list] = db.relationship(
+        "Comment", backref="meme", lazy=True, cascade="all, delete-orphan"
+    )
 
     def __init__(self, posted_by: int, filename: str, private: bool) -> None:
         """
@@ -87,6 +114,86 @@ class Meme(db.Model):
         except Exception as err:
             print(err)
             return False
+
+    def check_seen_by_user(self, user_id: int) -> bool:
+        """Check if a user has seen the meme."""
+        return user_id in [user.id for user in self.seen_by]
+
+    def seen_by_user(self, user_id: int) -> None:
+        """Add a user to the list of users who have seen the meme."""
+        if not self.check_seen_by_user(user_id):
+            self.seen_by.append(user_id)
+            self.save()
+
+    def get_comments(self):
+        """Return the comments on the meme."""
+        return self.comments
+
+    def save(self) -> None:
+        """Save the meme to the database."""
+        db.session.add(self)
+        db.session.commit()
+
+    def delete(self) -> None:
+        """Delete the meme from the database."""
+        db.session.delete(self)
+        db.session.commit()
+
+    def get_id(self) -> int:
+        """Get the id of the meme."""
+        return self.id
+
+    def get_date_posted(self) -> datetime:
+        """Get the date posted of the meme."""
+        return self.date_posted
+
+    def get_posted_by(self) -> int:
+        """Get the user who posted the meme."""
+        return self.posted_by
+
+    def get_url(self) -> str:
+        """Get the URL of the meme."""
+        return self.url
+
+    def get_filename(self) -> str:
+        """Get the filename of the meme."""
+        return self.filename
+
+    def get_filepath(self) -> str:
+        """Get the filepath of the meme."""
+        return self.filepath
+
+    def get_thumbnail(self) -> str:
+        """Get the thumbnail of the meme."""
+        return self.thumbnail
+
+    def get_thumbnail_path(self) -> str:
+        """Get the thumbnail path of the meme."""
+        return self.thumbnail_path
+
+    def get_deleted(self) -> bool:
+        """Get whether the meme is deleted."""
+        return self.deleted
+
+    def get_private(self) -> bool:
+        """Get whether the meme is private."""
+        return self.private
+
+    def get_group_id(self) -> int:
+        """Get the id of the group the meme is in."""
+        return self.group_id
+
+    def get_seen_by(self) -> list:
+        """Get the users who have seen the meme."""
+        return self.seen_by
+
+    def get_comments(self) -> list:
+        """Get the comments on the meme."""
+        return self.comments
+
+    def update(self) -> None:
+        """Update the meme in the database."""
+        db.session.commit()
 
     @classmethod
     def from_url(cls, url, posted_by, private):

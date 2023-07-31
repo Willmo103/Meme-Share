@@ -4,3 +4,4 @@
 from .user import User as User
 from .meme import Meme as Meme
 from .group import Group as Group
+from .comment import Comment as Comment

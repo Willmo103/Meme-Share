@@ -1,6 +1,5 @@
 from app import db
 from sqlalchemy.orm import Mapped
-from .tables import group_members
 
 
 class Group(db.Model):
