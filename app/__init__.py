@@ -119,6 +119,8 @@ def create_app():
         # create the database tables if they do not exist
         db.create_all()
 
+        from .scripts import test_memes
+        test_memes.generate_test_memes()
         # return the app instance
         return app
 

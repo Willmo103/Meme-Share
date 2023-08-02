@@ -40,20 +40,18 @@ const dirToJson = async (dirPath, dirJson = {}, _dirName = dirName) => {
     if (await isIgnoredFile(file)) {
       dirJson[_dirName][file] = { content: "ignored" };
     } else {
-      // if the file is a directory recurse
       if (fs.lstatSync(`${dirPath}/${file}`).isDirectory()) {
         await dirToJson(`${dirPath}/${file}`, dirJson[_dirName], file);
       } else {
-        // if the file is a file read the file and add the content to the dirJson object
         await fs.promises
           .readFile(`${dirPath}/${file}`, "utf8")
           .then((data) => {
-            dirJson[_dirName][file] = data;
+            dirJson[_dirName][file] = { content: data };
           })
           .catch((err) => {
             log(err);
             log(`unable to read ${file}`);
-            dirJson[_dirName][file] = "Unreadable";
+            dirJson[_dirName][file] = { content: "Unreadable" };
           });
       }
     }
@@ -118,41 +116,45 @@ const readFiles = async (dirPath) => {
 };
 
 const isIgnoredFile = async (file) => {
-  let extension = "";
-
   // load the ignored files list from ignores.json
   const ignored = await getIgnoredFiles();
   const ignoredFiles = ignored.ignoredFiles;
 
-  if (file.includes(".") && !file.startsWith(".")) {
-    // get the extension to check if it is in the list
-    extension = file.split(".").pop();
+  let extension = null;
+  if (file.includes(".")) {
+    extension = file.split(".").pop() ? file.split(".").pop() : null;
   }
-
+  console.log("extension", extension);
   // check if the file is in the list
-  if (extension === "") {
+  if (!extension) {
     return ignoredFiles.includes(file);
   } else {
-    return ignoredFiles.includes(file) || ignoredFiles.includes(extension);
+    return ignoredFiles.includes(extension);
   }
 };
 
 const saveJson = async (saveToPath, dirJson) => {
-  await fs.promises.writeFile(saveToPath, JSON.stringify(dirJson));
+  await fs.promises.writeFile(saveToPath, dirJson);
 };
 
 // Now call the main function
 dirToJson(dirPath).then((dirJson) => {
   if (savePathFlag && saveToPath !== "") {
     try {
-      saveJson(`${saveToPath}/${dirName}_directoryStructure.json`, dirJson);
+      saveJson(
+        `${saveToPath}/${dirName}_directoryStructure.json`,
+        JSON.stringify(dirJson, null, 2)
+      );
     } catch (err) {
       console.error(err);
       process.exit(1);
     }
   } else {
     try {
-      saveJson(`${dirPath}/${dirName}_directoryStructure.json`, dirJson);
+      saveJson(
+        `${dirPath}/${dirName}_directoryStructure.json`,
+        JSON.stringify(dirJson, null, 2)
+      );
     } catch (err) {
       console.error(err);
       process.exit(1);
@@ -166,4 +168,4 @@ const log = (message) => {
   } catch {
     fs.writeFileSync(`${scriptPath}/log.txt`, String(message));
   }
-}
+};
