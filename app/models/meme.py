@@ -5,9 +5,12 @@ from PIL import Image
 from app import db
 from datetime import datetime
 from sqlalchemy.orm import Mapped
-import os
+import os, requests, uuid
+from urllib.parse import urlparse
+from io import BytesIO
 
 _upload_folder = os.environ.get("UPLOAD_FOLDER")
+_thumb_folder = os.path.abspath(os.path.join(_upload_folder, "thumbnails"))
 
 
 class Meme(db.Model):
@@ -66,8 +69,9 @@ class Meme(db.Model):
     url: str = db.Column(db.String(100), nullable=True, default=None)
     filename: str = db.Column(db.String(100), nullable=True, default=None)
     filepath: str = db.Column(db.String(100), nullable=True, default=None)
-    thumbnail: str = db.Column(db.String(100), nullable=True, default=None)
-    thumbnail_path: str = db.Column(db.String(100), nullable=True, default=None)
+    sm_thumbnail_path = db.Column(db.String(100), nullable=True, default=None)
+    md_thumbnail_path = db.Column(db.String(100), nullable=True, default=None)
+    lg_thumbnail_path = db.Column(db.String(100), nullable=True, default=None)
     deleted: bool = db.Column(db.Boolean, nullable=False, default=False)
     private: bool = db.Column(db.Boolean, nullable=False, default=False)
     group_id: int = db.Column(db.Integer, db.ForeignKey("group.id"), nullable=True)
@@ -80,6 +84,7 @@ class Meme(db.Model):
     comments: Mapped[list] = db.relationship(
         "Comment", backref="meme", lazy=True, cascade="all, delete-orphan"
     )
+
 
     def __init__(self, posted_by: int, filename: str, private: bool) -> None:
         """
@@ -95,25 +100,40 @@ class Meme(db.Model):
         self.posted_by = posted_by
         self.filename = filename
         self.filepath = os.path.join(_upload_folder, filename)
-        self.thumbnail = f"thumbnail_{filename}"
-        self.thumbnail_path = os.path.join(_upload_folder, "thumbnails", self.thumbnail)
         self.private = private
-        self.create_thumbnail()
+        self.create_thumbnail('sm')
+        self.create_thumbnail('md')
+        self.create_thumbnail('lg')
 
     def __repr__(self) -> str:
         """Return a string representation of the object."""
         return f"Meme('{self.id}', '{self.filename}')"
 
-    def create_thumbnail(self, size=(350, 350)) -> bool:
-        """Create a thumbnail of the meme."""
+    def create_thumbnail(self, size_type='md') -> bool:
+        """Create thumbnails of the meme with different sizes."""
+        # Sizes mapping
+        size_mapping = {'sm': (150, 150), 'md': (350, 350), 'lg': (700, 700)}
+        size = size_mapping.get(size_type, (350, 350))
         try:
             img = Image.open(self.filepath)
             img.thumbnail(size)
-            img.save(self.thumbnail_path)
+            thumb_filename = f"{size_type}_thumbnail_{self.filename}"
+            thumb_path = os.path.join(_thumb_folder, thumb_filename)
+            img.save(thumb_path)
+            setattr(self, f"{size_type}_thumbnail_path", thumb_path)
             return True
         except Exception as err:
             print(err)
             return False
+
+    def get_sm_thumbnail(self) -> str:
+        return self.sm_thumbnail_path
+
+    def get_md_thumbnail(self) -> str:
+        return self.md_thumbnail_path
+
+    def get_lg_thumbnail(self) -> str:
+        return self.lg_thumbnail_path
 
     def check_seen_by_user(self, user_id: int) -> bool:
         """Check if a user has seen the meme."""
@@ -163,14 +183,6 @@ class Meme(db.Model):
         """Get the filepath of the meme."""
         return self.filepath
 
-    def get_thumbnail(self) -> str:
-        """Get the thumbnail of the meme."""
-        return self.thumbnail
-
-    def get_thumbnail_path(self) -> str:
-        """Get the thumbnail path of the meme."""
-        return self.thumbnail_path
-
     def get_deleted(self) -> bool:
         """Get whether the meme is deleted."""
         return self.deleted
@@ -192,20 +204,49 @@ class Meme(db.Model):
         db.session.commit()
 
     @classmethod
-    def from_url(cls, url, posted_by, private):
+    def from_url(cls, url, posted_by, private, thumbnail_sizes=[(350, 350)]):
         """Create a meme from a URL."""
-        # This method should download the image from the URL, save it to the
-        # upload folder, and then create a Meme object with the filename of
-        # the saved image.
-        # ...code to download image...
-        filename = ...  # the filename of the downloaded image
-        return cls(posted_by, filename, private)
+        # Download the image from the URL
+        response = requests.get(url)
+        if response.status_code != 200:
+            print(f"Failed to download image from {url}")
+            return None
+
+        # Open the image with PIL to remove EXIF data
+        img = Image.open(BytesIO(response.content))
+
+        # Generate a unique filename
+        unique_filename = str(uuid.uuid4()) + '.png'
+
+        # Create the full file path
+        filepath = os.path.join(_upload_folder, unique_filename)
+
+        # Save the original image
+        img.save(filepath)
+
+
+        # Create a Meme object with the downloaded image and thumbnails
+        meme = cls(posted_by, unique_filename, private)
+
+        return meme
 
     @classmethod
     def from_upload(cls, file, posted_by, private):
         """Create a meme from an uploaded file."""
-        # This method should save the uploaded file to the upload folder,
-        # and then create a Meme object with the filename of the saved file.
-        # ...code to save uploaded file...
-        filename = ...  # the filename of the saved file
-        return cls(posted_by, filename, private)
+        # Generate a unique filename
+        unique_filename = str(uuid.uuid4()) + '.' + file.filename.split('.')[-1]
+
+        # Create the full file path
+        filepath = os.path.join(_upload_folder, unique_filename)
+
+        # Save the uploaded file
+        file.save(filepath)
+
+        # Open the image with PIL to remove EXIF data
+        img = Image.open(filepath)
+        img.save(filepath)
+
+        # Create a Meme object with the saved image
+        meme = cls(posted_by, unique_filename, private)
+
+        return meme

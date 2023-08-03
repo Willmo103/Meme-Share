@@ -7,9 +7,11 @@ def generate_test_memes():
     for meme in os.listdir(memes_dir):
         if meme.endswith('.jpg'):
             meme_path = os.path.join(memes_dir, meme)
-            print(meme_path)
             check_meme = Meme.query.filter_by(filename=meme).first()
-            print(check_meme)
+            if not check_meme:
+                print('creating meme')
+                meme = Meme.from_upload(meme, 1, False)
+                meme.save()
             # Meme.create(meme_path)
 
 generate_test_memes()
