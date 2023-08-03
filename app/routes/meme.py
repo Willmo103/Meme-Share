@@ -35,6 +35,7 @@ def upload_meme():
             db.session.commit()
         elif url:
             meme = Meme.from_url(url, current_user.id, private)
+            meme.__setattr__("url", url)
             db.session.add(meme)
             db.session.commit()
-    return render_template("index.html")
+    return redirect(url_for("routes.index_page"))
