@@ -41,16 +41,16 @@
                         <a class="inline-block text-grey-600 dark:text-white no-underline hover:text-gray-200 hover:text-underline py-2 px-4"
                             href="{{url_for('routes.logout')}}">Logout</a>
                     </li>
+                    <li class="mr-3">
+                        <a class="inline-block text-grey-600 dark:text-white no-underline hover:text-gray-200 hover:text-underline py-2 px-4"
+                            class="nav-link" href="#" id="upload">Upload</a>
+                    </li>
                     {% else %}
                     <li class="mr-3">
                         <a class="inline-block text-grey-600 dark:text-white no-underline hover:text-gray-200 hover:text-underline py-2 px-4"
                             class="nav-link" href="{{ url_for('routes.login') }}">Sign In</a>
                     </li>
                     {% endif %}
-                    <li class="mr-3">
-                        <a class="inline-block text-grey-600 dark:text-white no-underline hover:text-gray-200 hover:text-underline py-2 px-4"
-                            class="nav-link" href="#" id="toggle_">Toggle</a>
-                    </li>
                 </ul>
             </div>
         </div>
@@ -65,8 +65,7 @@
                 <div class="flex justify-between items-center border-b-2 border-gray-300 dark:border-gray-600 p-2">
                     <button class="text-2xl font-semibold" id="close_full_screen_modal">&times;</button>
                 </div>
-                <div class="p-2">
-                    {% include 'upload_meme.html' %}
+                <div class="p-2" id="modalContent">
                 </div>
             </div>
         </div>
@@ -74,22 +73,18 @@
             // Get the modal
             var modal = document.getElementById("full_screen_modal");
 
-            // while the modal is open ignore the scroll event
-            window.addEventListener("scroll", function () {
-                if (!modal.classList.contains("hidden")) {
-                    window.scrollTo(0, 0);
-                }
-            });
-
             // Get the button that opens the modal
-            var btn = document.getElementById("toggle_");
+            var uploadBtn = document.getElementById("upload");
 
             // Get the <span> element that closes the modal
             var span = document.getElementById("close_full_screen_modal");
 
+            var modalContent = document.getElementById("modalContent");
+
             // When the user clicks the button, open the modal
-            btn.onclick = function () {
+            uploadBtn.onclick = function () {
                 modal.classList.remove("hidden");
+                modalContent.innerHTML = `{% include 'upload_meme.html' %}`;
                 while (modal.classList.contains("hidden")) {
                     window.scrollTo(0, 0);
                 }
@@ -98,14 +93,9 @@
             // When the user clicks on <span> (x), close the modal
             span.onclick = function () {
                 modal.classList.add("hidden");
+                modalContent.innerHTML = "";
             }
 
-            // When the user clicks anywhere outside of the modal, close it
-            window.onclick = function (event) {
-                if (event.target == modal) {
-                    modal.classList.add("hidden");
-                }
-            }
 
 
         </script>

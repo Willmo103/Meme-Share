@@ -5,6 +5,7 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, FileField, BooleanField
 from wtforms.validators import Length
 
+
 class UploadMemeForm(FlaskForm):
     """Form for uploading a meme.
     @field image: The image file of the meme.

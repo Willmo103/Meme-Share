@@ -59,7 +59,6 @@ class Meme(db.Model):
         "Comment", backref="meme", lazy=True, cascade="all, delete-orphan"
     )
 
-
     def __init__(self, posted_by: int, filename: str, private: bool) -> None:
         """
         Instantiate an object of the class.
@@ -75,18 +74,18 @@ class Meme(db.Model):
         self.filename = filename
         self.filepath = os.path.join(_upload_folder, filename)
         self.private = private
-        self.create_thumbnail('sm')
-        self.create_thumbnail('md')
-        self.create_thumbnail('lg')
+        self.create_thumbnail("sm")
+        self.create_thumbnail("md")
+        self.create_thumbnail("lg")
 
     def __repr__(self) -> str:
         """Return a string representation of the object."""
         return f"Meme('{self.id}', '{self.filename}')"
 
-    def create_thumbnail(self, size_type='md') -> bool:
+    def create_thumbnail(self, size_type="md") -> bool:
         """Create thumbnails of the meme with different sizes."""
         # Sizes mapping
-        size_mapping = {'sm': (150, 150), 'md': (350, 350), 'lg': (700, 700)}
+        size_mapping = {"sm": (150, 150), "md": (350, 350), "lg": (700, 700)}
         size = size_mapping.get(size_type, (350, 350))
         try:
             img = Image.open(self.filepath)
@@ -190,14 +189,13 @@ class Meme(db.Model):
         img = Image.open(BytesIO(response.content))
 
         # Generate a unique filename
-        unique_filename = str(uuid.uuid4()) + '.png'
+        unique_filename = str(uuid.uuid4()) + ".png"
 
         # Create the full file path
         filepath = os.path.join(_upload_folder, unique_filename)
 
         # Save the original image
         img.save(filepath)
-
 
         # Create a Meme object with the downloaded image and thumbnails
         meme = cls(posted_by, unique_filename, private)
@@ -208,7 +206,7 @@ class Meme(db.Model):
     def from_upload(cls, file, posted_by, private):
         """Create a meme from an uploaded file."""
         # Generate a unique filename
-        unique_filename = str(uuid.uuid4()) + '.' + file.filename.split('.')[-1]
+        unique_filename = str(uuid.uuid4()) + "." + file.filename.split(".")[-1]
 
         # Create the full file path
         filepath = os.path.join(_upload_folder, unique_filename)

@@ -49,7 +49,6 @@ class Group(db.Model):
         backref=db.backref("groups", lazy=True),
     )
 
-
     def __init__(self, name: str, owner: int, private: bool) -> None:
         """
         Instantiate an object of the class.
@@ -62,14 +61,12 @@ class Group(db.Model):
         self.owner = owner
         self.private = private
 
-
     def __repr__(self) -> str:
         """
         Return a string representation of the object.
         @return: A string representation of the object.
         """
         return f"Group('{self.id}', '{self.name}')"
-
 
     def save(self) -> None:
         """
@@ -79,7 +76,6 @@ class Group(db.Model):
         db.session.add(self)
         db.session.commit()
 
-
     def delete(self) -> None:
         """
         Delete the group from the database.
@@ -88,14 +84,12 @@ class Group(db.Model):
         db.session.delete(self)
         db.session.commit()
 
-
     def is_private(self) -> bool:
         """
         Check if the group is private.
         @return: Whether the group is private.
         """
         return self.private
-
 
     def set_private(self, private: bool) -> None:
         """
@@ -106,7 +100,6 @@ class Group(db.Model):
         self.private = private
         db.session.commit()
 
-
     def set_name(self, name: str) -> None:
         """
         Set the name of the group.
@@ -115,7 +108,6 @@ class Group(db.Model):
         """
         self.name = name
         db.session.commit()
-
 
     def add_member(self, user: int) -> None:
         """
@@ -126,7 +118,6 @@ class Group(db.Model):
         self.members.append(user)
         db.session.commit()
 
-
     def remove_member(self, user: int) -> None:
         """
         Remove a member from the group.
@@ -136,7 +127,6 @@ class Group(db.Model):
         self.members.remove(user)
         db.session.commit()
 
-
     def is_member(self, user: int) -> bool:
         """
         Check if a user is a member of the group.
@@ -144,7 +134,6 @@ class Group(db.Model):
         @return: Whether the user is a member of the group.
         """
         return user in self.members
-
 
     def is_owner(self, user: int) -> bool:
         """
@@ -154,14 +143,12 @@ class Group(db.Model):
         """
         return user == self.owner
 
-
     def get_owner(self) -> int:
         """
         Get the owner of the group.
         @return: The owner of the group.
         """
         return self.owner
-
 
     def get_members(self) -> list:
         """
@@ -170,7 +157,6 @@ class Group(db.Model):
         """
         return self.members
 
-
     def get_memes(self) -> list:
         """
         Get the memes of the group.
@@ -178,13 +164,11 @@ class Group(db.Model):
         """
         return self.memes
 
-
     def get_name(self) -> str:
         """
         Get the name of the group.
         @return: The name of the group."""
         return self.name
-
 
     def get_id(self) -> int:
         """
@@ -192,7 +176,6 @@ class Group(db.Model):
         @return: The id of the group.
         """
         return self.id
-
 
     def get_private(self) -> bool:
         """

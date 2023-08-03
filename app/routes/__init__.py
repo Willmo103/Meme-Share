@@ -1,9 +1,8 @@
 from flask import Blueprint
 from flask_wtf import FlaskForm
 
-from app.forms import (
-    UploadMemeForm
-)
+from app.forms import UploadMemeForm
+
 #     FileUploadForm,
 #     BookmarkForm,
 #     EditFileForm,
@@ -18,6 +17,8 @@ def inject_forms() -> dict:
     return dict(
         upload_form=upload_meme_form,
     )
+
+
 #     upload_form: FlaskForm = FileUploadForm()
 #     bookmark_form: FlaskForm = BookmarkForm()
 #     edit_file_form: FlaskForm = EditFileForm()
