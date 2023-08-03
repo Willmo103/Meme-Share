@@ -6,7 +6,6 @@ from app import db
 from datetime import datetime
 from sqlalchemy.orm import Mapped
 import os, requests, uuid
-from urllib.parse import urlparse
 from io import BytesIO
 
 _upload_folder = os.environ.get("UPLOAD_FOLDER")
@@ -15,45 +14,20 @@ _thumb_folder = os.path.abspath(os.path.join(_upload_folder, "thumbnails"))
 
 class Meme(db.Model):
     """
-    Create a Meme model.
-
-    This model should have the following attributes:
-    - id (int, primary key)
-    - date_posted (datetime, not nullable, default=datetime.utcnow)
-    - posted_by (int, foreign key to user.id)
-    - url (str, nullable)
-    - filename (str, nullable)
-    - filepath (str, nullable)
-    - thumbnail (str, nullable)
-    - thumbnail_path (str, nullable)
-    - deleted (bool, not nullable, default=False)
-    - private (bool, not nullable, default=False)
-
-    This model should have the following methods:
-    - __init__ (instantiate an object of the class)
-    - __repr__ (return a string representation of the object)
-    - create_thumbnail (create a thumbnail of the meme)
-    - from_url (create a meme from a URL)
-    - from_upload (create a meme from an uploaded file)
-    - check_seen_by_user (check if a user has seen the meme)
-    - seen_by_user (add a user to the list of users who have seen the meme)
-    - get_comments (return the comments on the meme)
-    - save (save the meme to the database)
-    - delete (delete the meme from the database)
-    - get_id (get the id of the meme)
-    - get_date_posted (get the date posted of the meme)
-    - get_posted_by (get the user who posted the meme)
-    - get_url (get the URL of the meme)
-    - get_filename (get the filename of the meme)
-    - get_filepath (get the filepath of the meme)
-    - get_thumbnail (get the thumbnail of the meme)
-    - get_thumbnail_path (get the thumbnail path of the meme)
-    - get_deleted (get whether the meme is deleted)
-    - get_private (get whether the meme is private)
-    - get_group_id (get the id of the group the meme is in)
-    - get_seen_by (get the users who have seen the meme)
-    - get_comments (get the comments on the meme)
-    - update (update the meme in the database)
+    @field id: The id of the meme.
+    @field date_posted: The date the meme was posted.
+    @field posted_by: The user who posted the meme.
+    @field url: The URL of the meme.
+    @field filename: The filename of the meme.
+    @field filepath: The filepath of the meme.
+    @field sm_thumbnail_path: The filepath of the small thumbnail of the meme.
+    @field md_thumbnail_path: The filepath of the medium thumbnail of the meme.
+    @field lg_thumbnail_path: The filepath of the large thumbnail of the meme.
+    @field deleted: Whether the meme is deleted.
+    @field private: Whether the meme is private.
+    @field group_id: The id of the group the meme is in.
+    @field seen_by: The users who have seen the meme.
+    @field comments: The comments on the meme.
     """
 
     id: int = db.Column(db.Integer, primary_key=True)

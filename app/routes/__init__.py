@@ -1,7 +1,9 @@
 from flask import Blueprint
 from flask_wtf import FlaskForm
 
-# from app.forms import (
+from app.forms import (
+    UploadMemeForm
+)
 #     FileUploadForm,
 #     BookmarkForm,
 #     EditFileForm,
@@ -9,9 +11,13 @@ from flask_wtf import FlaskForm
 
 endpoint = Blueprint("routes", __name__)
 
-# # Inject forms into all templates
-# @endpoint.context_processor
-# def inject_forms() -> dict:
+# Inject forms into all templates
+@endpoint.context_processor
+def inject_forms() -> dict:
+    upload_meme_form: FlaskForm = UploadMemeForm()
+    return dict(
+        upload_form=upload_meme_form,
+    )
 #     upload_form: FlaskForm = FileUploadForm()
 #     bookmark_form: FlaskForm = BookmarkForm()
 #     edit_file_form: FlaskForm = EditFileForm()
@@ -23,3 +29,4 @@ endpoint = Blueprint("routes", __name__)
 
 from .index import index_page as index_page
 from .auth import login as login, logout as logout, register as register
+from .meme import upload_meme as upload_meme

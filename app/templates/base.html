@@ -47,12 +47,68 @@
                             class="nav-link" href="{{ url_for('routes.login') }}">Sign In</a>
                     </li>
                     {% endif %}
+                    <li class="mr-3">
+                        <a class="inline-block text-grey-600 dark:text-white no-underline hover:text-gray-200 hover:text-underline py-2 px-4"
+                            class="nav-link" href="#" id="toggle_">Toggle</a>
+                    </li>
                 </ul>
             </div>
         </div>
     </nav>
     <!-- Main Content -->
     {% block content %}{% endblock %}
+    <!-- full screen modal -->
+    <div class="hidden w-full h-full fixed z-50 top-0 left-0 overflow-hidden bg-black bg-opacity-60"
+        id="full_screen_modal">
+        <div class="w-full h-full flex flex-col justify-center items-center">
+            <div class="bg-white dark:bg-black rounded-lg shadow-lg max-w-fit">
+                <div class="flex justify-between items-center border-b-2 border-gray-300 dark:border-gray-600 p-2">
+                    <button class="text-2xl font-semibold" id="close_full_screen_modal">&times;</button>
+                </div>
+                <div class="p-2">
+                    {% include 'upload_meme.html' %}
+                </div>
+            </div>
+        </div>
+        <script>
+            // Get the modal
+            var modal = document.getElementById("full_screen_modal");
+
+            // while the modal is open ignore the scroll event
+            window.addEventListener("scroll", function () {
+                if (!modal.classList.contains("hidden")) {
+                    window.scrollTo(0, 0);
+                }
+            });
+
+            // Get the button that opens the modal
+            var btn = document.getElementById("toggle_");
+
+            // Get the <span> element that closes the modal
+            var span = document.getElementById("close_full_screen_modal");
+
+            // When the user clicks the button, open the modal
+            btn.onclick = function () {
+                modal.classList.remove("hidden");
+                while (modal.classList.contains("hidden")) {
+                    window.scrollTo(0, 0);
+                }
+            }
+
+            // When the user clicks on <span> (x), close the modal
+            span.onclick = function () {
+                modal.classList.add("hidden");
+            }
+
+            // When the user clicks anywhere outside of the modal, close it
+            window.onclick = function (event) {
+                if (event.target == modal) {
+                    modal.classList.add("hidden");
+                }
+            }
+
+
+        </script>
 </body>
 
 </html>
