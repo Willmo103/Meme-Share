@@ -3,14 +3,15 @@
     <div
         class="bg-white dark:bg-black border rounded border-gray-300 dark:border-gray-600 w-80 py-6 flex items-center flex-col mb-1 mt-1">
         <h1 class="text-black dark:text-white font-billabong text-6xl">Upload</h1>
-        <form action="{{url_for('routes.upload_meme')}}" method="POST" class="mt-8 w-auto flex flex-col">
+        <form action="{{url_for('routes.upload_meme')}}" method="POST" class="mt-8 w-auto flex flex-col"
+            enctype="multipart/form-data">
             {{ upload_form.hidden_tag() }}
 
-            {{ upload_form.image(class="text-xs w-full mb-2 rounded border bg-white dark:bg-gray-700 border-gray-300
+            {{ upload_form.file(class="text-xs w-full mb-2 rounded border bg-white dark:bg-gray-700 border-gray-300
             dark:border-black px-2 py-2
             focus:outline-none
             hover:cursor-pointer
-            focus:border-gray-400 active:outline-none text-black dark:text-gray-300") }}
+            focus:border-gray-400 active:outline-none text-black dark:text-gray-300", type="file") }}
 
             {{ upload_form.url(class="text-xs w-full mb-2 rounded border bg-white dark:bg-gray-700 border-gray-300
             dark:border-black px-2 py-2

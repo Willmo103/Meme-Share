@@ -7,9 +7,11 @@ from datetime import datetime
 from sqlalchemy.orm import Mapped
 import os, requests, uuid
 from io import BytesIO
+from werkzeug.datastructures import FileStorage
+from app import conf
 
-_upload_folder = os.environ.get("UPLOAD_FOLDER")
-_thumb_folder = os.path.abspath(os.path.join(_upload_folder, "thumbnails"))
+_upload_folder = conf.UPLOADS_FOLDER
+_thumb_folder = conf.THUMBNAILS_FOLDER
 
 
 class Meme(db.Model):
@@ -40,12 +42,12 @@ class Meme(db.Model):
         nullable=True,
         default=None,
     )
-    url: str = db.Column(db.String(100), nullable=True, default=None)
-    filename: str = db.Column(db.String(100), nullable=True, default=None)
-    filepath: str = db.Column(db.String(100), nullable=True, default=None)
-    sm_thumbnail_path = db.Column(db.String(100), nullable=True, default=None)
-    md_thumbnail_path = db.Column(db.String(100), nullable=True, default=None)
-    lg_thumbnail_path = db.Column(db.String(100), nullable=True, default=None)
+    url: str = db.Column(db.String(200), nullable=True, default=None)
+    filename: str = db.Column(db.String(200), nullable=True, default=None)
+    filepath: str = db.Column(db.String(200), nullable=True, default=None)
+    sm_thumbnail_path = db.Column(db.String(200), nullable=True, default=None)
+    md_thumbnail_path = db.Column(db.String(200), nullable=True, default=None)
+    lg_thumbnail_path = db.Column(db.String(200), nullable=True, default=None)
     deleted: bool = db.Column(db.Boolean, nullable=False, default=False)
     private: bool = db.Column(db.Boolean, nullable=False, default=False)
     group_id: int = db.Column(db.Integer, db.ForeignKey("group.id"), nullable=True)
@@ -177,7 +179,7 @@ class Meme(db.Model):
         db.session.commit()
 
     @classmethod
-    def from_url(cls, url, posted_by, private, thumbnail_sizes=[(350, 350)]):
+    def from_url(cls, url: str, posted_by: int, private: bool):
         """Create a meme from a URL."""
         # Download the image from the URL
         response = requests.get(url)
@@ -203,7 +205,7 @@ class Meme(db.Model):
         return meme
 
     @classmethod
-    def from_upload(cls, file, posted_by, private):
+    def from_upload(cls, file: FileStorage, posted_by: int, private: bool):
         """Create a meme from an uploaded file."""
         # Generate a unique filename
         unique_filename = str(uuid.uuid4()) + "." + file.filename.split(".")[-1]
