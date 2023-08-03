@@ -1,117 +1,113 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ title }}</title>
-    <link class="" href="{{url_for('static', filename='css/output.css')}}" rel="stylesheet">
-    <link class="" href="../static/css/output.css" rel="stylesheet">
-    <script src="https://kit.fontawesome.com/03efbea893.js" crossorigin="anonymous"></script>
-    <!-- Site Icon -->
-    <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/intragram_logo_darkmode.png') }}"
-        class="dark:hidden">
-</head>
+{% include 'head.html' %}
 
 <body class="dark:bg-black bg-white text-gray-900 dark:text-gray-100">
-
-    <body class="dark:bg-black bg-white text-gray-900 dark:text-gray-100">
-        <div class="flex flex-row">
-            <!-- Left Sidebar (Navbar) -->
-            <nav
-                class="fixed top-0 left-0 bg-white dark:bg-black p-2 h-full w-1/3 md:w-1/4 lg:w-1/4 xl:w-1/4 border border-gray-600 overflow-auto">
-                <!-- Your navbar code here -->
-                <div class="container mx-auto flex flex-col items-start">
-                    <div
-                        class="flex flex-row w-full md:w-1/2 justify-start md:justify-start text-black dark:text-white ps-2 mb-1 mt-4 ms-2">
-                        <a class="flex items-center text-grey-600 dark:text-white no-underline hover:text-white hover:no-underline"
-                            href="{{ url_for('routes.index_page') }}">
-                            <span class="text-3xl font-billabong">&nbsp;&nbsp;Intragram</span>
-                        </a>
-                    </div>
-                    <div class="flex w-full pt-2 mt-6 content-start justify-between md:w-1/2 md:justify-start">
-                        <ul class="flex flex-col justify-between md:flex-none items-center">
-                            <!-- Check if user is authenticated -->
-                            {% if current_user.is_authenticated %}
-                            <li class="flex flex-row w-full justify-between my-2">
-                                <a class="text-grey-600 dark:text-white no-underline hover:text-gray-300 hover:text-underline py-2 px-4 text-1xl font-semibold"
-                                    href="#"><span class="mr-2"><i
-                                            class="fas fa-home mr-1 nav-icon ms-2"></i></span>Home</a>
-                            </li>
-                            <li class="flex flex-row w-full justify-between my-2">
-                                <a class="text-grey-600 dark:text-white no-underline hover:text-gray-300 hover:text-underline py-3 px-4 text-1xl font-semibold"
-                                    href="#"><span class="mr-2"><i
-                                            class="far fa-bookmark mr-1 nav-icon ms-2"></i></span>Saved</a>
-                            </li>
-                            <li class="flex flex-row w-full justify-start my-2">
-                                <a class="text-grey-600 dark:text-white no-underline hover:text-gray-200 hover:text-underline py-2 px-4 text-1xl font-semibold"
-                                    href="{{url_for('routes.logout')}}">
-                                    <span class="mr-2"><i
-                                            class="fa-solid fa-right-from-bracket nav-icon ms-2"></i></span>Logout</a>
-                            </li>
-                            <li class="flex flex-row w-full justify-start my-2">
-                                <a class="text-grey-600 dark:text-white no-underline hover:text-gray-200 hover:text-underline py-2 px-4 text-1xl font-semibold"
-                                    class="nav-link" href="#" id="upload">
-                                    <span class="mr-2"><i
-                                            class="fa-solid fa-arrow-up-from-bracket nav-icon ms-2"></i></span>Upload</a>
-                            </li>
-                            {% else %}
-                            <li class="flex flex-row w-full justify-start my-2">
-                                <a class="text-grey-600 dark:text-white no-underline hover:text-gray-200 hover:text-underline py-2 px-4 text-1xl font-semibold"
-                                    class="nav-link" href="{{ url_for('routes.login') }}">Sign In</a>
-                            </li>
-                            {% endif %}
-                        </ul>
-                    </div>
+    <div class="flex flex-row">
+        <!-- Left Sidebar (Navbar) -->
+        <nav
+            class="fixed top-0 left-0 bg-white dark:bg-black p-2 h-full w-1/3 md:w-1/4 lg:w-1/4 xl:w-1/4 border border-gray-600 overflow-auto">
+            <!-- Your navbar code here -->
+            <div class="container mx-auto flex flex-col items-start">
+                <div
+                    class="flex flex-row w-full md:w-1/2 justify-start md:justify-start text-black dark:text-white ps-2 mb-1 mt-4 ms-2">
+                    <a class="flex items-center text-grey-600 dark:text-white no-underline hover:text-white hover:no-underline"
+                        href="{{ url_for('routes.index_page') }}">
+                        <span class="text-3xl font-billabong">&nbsp;&nbsp;Intragram</span>
+                    </a>
                 </div>
-            </nav>
-            <div class="ms-1/3 md:ms-1/4 lg:ms-1/4 xl:ms-1/4 w-2/3 md:w-3/4 lg:w-3/4 xl:w-3/4 overflow-auto">
-                <!-- Main Content -->
-                {% block content %}{% endblock %}
+                <div class="flex w-full pt-2 mt-6 content-start justify-between md:w-1/2 md:justify-start">
+                    <ul class="flex flex-col justify-between md:flex-none items-center">
+                        <!-- Check if user is authenticated -->
+                        {% if current_user.is_authenticated %}
+                        <li class="flex flex-row w-full justify-between my-2">
+                            <a class="text-grey-600 dark:text-white no-underline hover:text-gray-300 hover:text-underline py-2 px-4 text-1xl font-semibold"
+                                href="#"><span class="mr-2"><i class="fas fa-home mr-1 nav-icon ms-2"
+                                        style="width:24px; height:21px;"></i></span>Home</a>
+                        </li>
+                        <li class="flex flex-row w-full justify-between my-2">
+                            <a class="text-grey-600 dark:text-white no-underline hover:text-gray-300 hover:text-underline py-3 px-4 text-1xl font-semibold"
+                                href="#"><span class="mr-2"><i class="far fa-bookmark mr-1 nav-icon ms-2"
+                                        style="width:24px; height:21px;"></i></span>Saved</a>
+                        </li>
+                        <li class="flex flex-row w-full justify-start my-2">
+                            <a class="text-grey-600 dark:text-white no-underline hover:text-gray-200 hover:text-underline py-2 px-4 text-1xl font-semibold"
+                                href="{{url_for('routes.logout')}}">
+                                <span class="mr-2"><i class="fa-solid fa-right-from-bracket nav-icon ms-2"
+                                        style="width:24px; height:21px;"></i></span>Logout</a>
+                        </li>
+                        <li class="flex flex-row w-full justify-start my-2">
+                            <a class="text-grey-600 dark:text-white no-underline hover:text-gray-200 hover:text-underline py-2 px-4 text-1xl font-semibold"
+                                class="nav-link" href="#" id="upload">
+                                <span class="mr-2"><i class="fa-solid fa-arrow-up-from-bracket nav-icon ms-2"
+                                        style="width:24px; height:21px;"></i></span>Upload</a>
+                        </li>
+                        {% else %}
+                        <li class="flex flex-row w-full justify-start my-2">
+                            <a class="text-grey-600 dark:text-white no-underline hover:text-gray-200 hover:text-underline py-2 px-4 text-1xl font-semibold"
+                                class="nav-link" href="{{ url_for('routes.login') }}">Sign In</a>
+                        </li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <div class="top-0 left-0 bg-white dark:bg-black p-2 h-full w-1/3 md:w-1/4 lg:w-1/4 xl:w-1/4 overflow-auto">
+        </div>
+        <div
+            class="flex-col col-span-10 flex ms-1/3 md:ms-1/4 lg:ms-1/4 xl:ms-1/4 w-2/3 md:w-3/4 lg:w-3/4 xl:w-3/4 overflow-auto">
+            <!-- Main Content -->
+            {% block content %}{% endblock %}
+        </div>
+    </div>
+    <!-- full screen modal -->
+    <div class="hidden w-full h-full fixed z-50 top-0 left-0 overflow-hidden bg-black bg-opacity-60"
+        id="full_screen_modal">
+        <div class="w-full h-full flex flex-col justify-center items-center">
+            <div class="bg-white dark:bg-black rounded-lg shadow-lg max-w-fit">
+                <div class="flex justify-between items-center border-b-2 border-gray-300 dark:border-gray-600 p-2">
+                    <button class="text-2xl font-semibold" id="close_full_screen_modal">&times;</button>
+                </div>
+                <div class="p-2" id="modalContent">
+                </div>
             </div>
         </div>
-        <!-- full screen modal -->
-        <div class="hidden w-full h-full fixed z-50 top-0 left-0 overflow-hidden bg-black bg-opacity-60"
-            id="full_screen_modal">
-            <div class="w-full h-full flex flex-col justify-center items-center">
-                <div class="bg-white dark:bg-black rounded-lg shadow-lg max-w-fit">
-                    <div class="flex justify-between items-center border-b-2 border-gray-300 dark:border-gray-600 p-2">
-                        <button class="text-2xl font-semibold" id="close_full_screen_modal">&times;</button>
-                    </div>
-                    <div class="p-2" id="modalContent">
-                    </div>
-                </div>
-            </div>
-            <script>
-                // Get the modal
-                var modal = document.getElementById("full_screen_modal");
+        <script>
+            // Get the modal
+            var modal = document.getElementById("full_screen_modal");
 
-                // Get the button that opens the modal
-                var uploadBtn = document.getElementById("upload");
-
-                // Get the <span> element that closes the modal
-                var span = document.getElementById("close_full_screen_modal");
-
-                var modalContent = document.getElementById("modalContent");
-
-                // When the user clicks the button, open the modal
-                uploadBtn.onclick = function () {
-                    modal.classList.remove("hidden");
-                    modalContent.innerHTML = `{% include 'upload_meme.html' %}`;
-                    while (modal.classList.contains("hidden")) {
-                        window.scrollTo(0, 0);
-                    }
+            window.addEventListener("scroll", function (event) {
+                if (!modal.classList.contains("hidden")) {
+                    window.scrollTo(0, 0);
                 }
+            });
 
-                // When the user clicks on <span> (x), close the modal
-                span.onclick = function () {
-                    modal.classList.add("hidden");
-                    modalContent.innerHTML = "";
+            // Get the button that opens the modal
+            var uploadBtn = document.getElementById("upload");
+
+            // Get the <span> element that closes the modal
+            var span = document.getElementById("close_full_screen_modal");
+
+            var modalContent = document.getElementById("modalContent");
+
+            // When the user clicks the button, open the modal
+            uploadBtn.onclick = function () {
+                modalContent.innerHTML = `{% include 'upload_meme.html' %}`;
+                modal.classList.remove("hidden");
+                while (modal.classList.contains("hidden")) {
+                    window.scrollTo(0, 0);
                 }
+            }
+
+            // When the user clicks on <span> (x), close the modal
+            span.onclick = function () {
+                modal.classList.add("hidden");
+                modalContent.innerHTML = "";
+            }
 
 
 
-            </script>
-    </body>
+        </script>
+</body>
 
 </html>

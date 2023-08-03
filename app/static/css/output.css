@@ -604,6 +604,18 @@ video {
   z-index: 50;
 }
 
+.col-auto {
+  grid-column: auto;
+}
+
+.col-span-10 {
+  grid-column: span 10 / span 10;
+}
+
+.col-span-2 {
+  grid-column: span 2 / span 2;
+}
+
 .m-4 {
   margin: 1rem;
 }
@@ -708,6 +720,10 @@ video {
 
 .mt-1 {
   margin-top: 0.25rem;
+}
+
+.mt-16 {
+  margin-top: 4rem;
 }
 
 .mt-2 {
@@ -944,6 +960,10 @@ video {
   align-items: center;
 }
 
+.items-baseline {
+  align-items: baseline;
+}
+
 .justify-start {
   justify-content: flex-start;
 }
@@ -958,6 +978,10 @@ video {
 
 .justify-between {
   justify-content: space-between;
+}
+
+.justify-around {
+  justify-content: space-around;
 }
 
 .justify-evenly {
@@ -1390,10 +1414,6 @@ video {
   font-family: 'billabong';
 
   src: url('../fonts/billabong.ttf');
-}
-
-.nav-icon {
-  font-size: 24px;
 }
 
 .fixed-sidebar {
