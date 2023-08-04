@@ -30,5 +30,8 @@ def inject_forms() -> dict:
 from .index import index_page as index_page
 from .auth import login as login, logout as logout, register as register
 from .meme import upload_meme as upload_meme
-from .dev import fix_memes as fix_memes
-from .save import toggle_save_meme as toggle_save_meme
+from .api_test_routes import fix_memes as fix_memes
+from .save import (
+    toggle_save_meme as toggle_save_meme,
+    toggle_like_meme as toggle_like_meme,
+)

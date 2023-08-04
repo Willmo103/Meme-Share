@@ -14,7 +14,7 @@ from . import User
 
 _upload_folder = conf.UPLOADS_FOLDER
 _thumb_folder = conf.THUMBNAILS_FOLDER
-_static_folder = os.path.join(os.environ.get('PROJECT_ROOT'), "app", "static")
+_static_folder = os.path.join(os.environ.get("PROJECT_ROOT"), "app", "static")
 
 
 class Meme(db.Model):
@@ -50,7 +50,6 @@ class Meme(db.Model):
     filepath: str = db.Column(db.String(200), nullable=True, default=None)
     sm_thumbnail_path = db.Column(db.String(200), nullable=True, default=None)
     md_thumbnail_path = db.Column(db.String(200), nullable=True, default=None)
-    lg_thumbnail_path = db.Column(db.String(200), nullable=True, default=None)
     deleted: bool = db.Column(db.Boolean, nullable=False, default=False)
     private: bool = db.Column(db.Boolean, nullable=False, default=False)
     group_id: int = db.Column(db.Integer, db.ForeignKey("group.id"), nullable=True)
@@ -63,7 +62,6 @@ class Meme(db.Model):
     comments: Mapped[list] = db.relationship(
         "Comment", backref="meme", lazy=True, cascade="all, delete-orphan"
     )
-
 
     def __init__(self, posted_by: int, filename: str, private: bool) -> None:
         """
@@ -82,7 +80,6 @@ class Meme(db.Model):
         self.private = private
         self.create_thumbnail("sm")
         self.create_thumbnail("md")
-        self.create_thumbnail("lg")
 
     def __repr__(self) -> str:
         """Return a string representation of the object."""
@@ -91,8 +88,8 @@ class Meme(db.Model):
     def create_thumbnail(self, size_type="md") -> bool:
         """Create thumbnails of the meme with different sizes."""
         # Sizes mapping
-        size_mapping = {"sm": (150, 150), "md": (350, 350), "lg": (700, 700)}
-        size = size_mapping.get(size_type, (350, 350))
+        size_mapping = {"sm": (309, 309), "md": (468, 468)}
+        size = size_mapping.get(size_type)
         try:
             img = Image.open(self.filepath)
             img.thumbnail(size)
@@ -201,7 +198,6 @@ class Meme(db.Model):
         """Get the username of the user who posted the meme."""
         return User.query.get(self.posted_by).get_username()
 
-
     @classmethod
     def from_url(cls, url: str, posted_by: int, private: bool):
         """Create a meme from a URL."""
@@ -262,3 +258,10 @@ class Meme(db.Model):
     def liked_by_user(self, user_id: int) -> bool:
         """Check if a user has liked the meme."""
         return user_id in [user.id for user in self.liked_by]
+
+    def delete_files(self):
+        """Delete the meme files from the filesystem."""
+        os.remove(os.path.abspath(self.filepath))
+        os.remove(os.path.abspath(self.sm_thumbnail_path))
+        os.remove(os.path.abspath(self.md_thumbnail_path))
+        os.remove(os.path.abspath(self.lg_thumbnail_path))
