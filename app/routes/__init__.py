@@ -1,6 +1,5 @@
 from flask import Blueprint
 from flask_wtf import FlaskForm
-
 from app.forms import UploadMemeForm
 
 #     FileUploadForm,
@@ -31,3 +30,5 @@ def inject_forms() -> dict:
 from .index import index_page as index_page
 from .auth import login as login, logout as logout, register as register
 from .meme import upload_meme as upload_meme
+from .dev import fix_memes as fix_memes
+from .save import toggle_save_meme as toggle_save_meme

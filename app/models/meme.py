@@ -1,6 +1,7 @@
 # filename: meme.py
 # filepath: app\models\meme.py
 
+import pathlib
 from PIL import Image
 from app import db
 from datetime import datetime
@@ -13,6 +14,7 @@ from . import User
 
 _upload_folder = conf.UPLOADS_FOLDER
 _thumb_folder = conf.THUMBNAILS_FOLDER
+_static_folder = os.path.join(os.environ.get('PROJECT_ROOT'), "app", "static")
 
 
 class Meme(db.Model):
@@ -104,13 +106,28 @@ class Meme(db.Model):
             return False
 
     def get_sm_thumbnail(self) -> str:
+        rel_path = os.path.relpath(self.sm_thumbnail_path, _static_folder)
         return self.sm_thumbnail_path
 
+    def render_sm_thumb(self):
+        return f"uploads/thumbnails/sm_thumbnail_{self.filename}"
+
+    def render_md_thumb(self):
+        return f"uploads/thumbnails/md_thumbnail_{self.filename}"
+
+    def render_lg_thumb(self):
+        return f"uploads/thumbnails/lg_thumbnail_{self.filename}"
+
+    def render_full(self):
+        return self.filename
+
     def get_md_thumbnail(self) -> str:
-        return self.md_thumbnail_path
+        rel_path = os.path.relpath(self.md_thumbnail_path, _static_folder)
+        return rel_path
 
     def get_lg_thumbnail(self) -> str:
-        return self.lg_thumbnail_path
+        rel_path = os.path.relpath(self.lg_thumbnail_path, _static_folder)
+        return rel_path
 
     def check_seen_by_user(self, user_id: int) -> bool:
         """Check if a user has seen the meme."""
@@ -231,3 +248,13 @@ class Meme(db.Model):
         meme = cls(posted_by, unique_filename, private)
 
         return meme
+
+    def fix_db_urls(self):
+        pathlib.Path(self.sm_thumbnail_path).resolve()
+        pathlib.Path(self.md_thumbnail_path).resolve()
+        pathlib.Path(self.lg_thumbnail_path).resolve()
+        pathlib.Path(self.filepath).resolve()
+
+    def saved_by_user(self, user_id: int) -> bool:
+        """Check if a user has saved the meme."""
+        return user_id in [user.id for user in self.saved_by]

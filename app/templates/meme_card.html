@@ -8,8 +8,8 @@
                         <div class="flex flex-row items-center">
                             <img src="https://picsum.photos/450" class="rounded-full" width="40">
                             <div class="flex flex-row items-center ml-2">
-                                <a href="#"><span class="font-bold mr-1 text-black dark:text-white">User
-                                        Name</span></a>
+                                <a href="#"><span class="font-bold mr-1 text-black dark:text-white">{{
+                                        meme.get_username() }}</span></a>
                             </div>
                         </div>
                         <div class="pr-2">
@@ -19,16 +19,16 @@
                     </div>
                     <div>
                         <a href="#">
-                            <img src="https://picsum.photos/450" class="w-auto h-75">
+                            <img src="{{ url_for('static', filename=meme.render_md_thumb()) }}" class="w-auto h-75">
                         </a>
                     </div>
                     <div class="p-4 flex justify-between items-center">
                         <div class="flex flex-row items-center">
-                            {% if current_user.is_authenticated %}
-                            <i
+                            {% if meme.saved_by_user(current_user.id) %}
+                            <i onclick="toggleSaveMeme({{ meme.id }}, this)"
                                 class="fas fa-heart mr-3 text-gray-400 hover:text-gray-600 dark:text-white hover:cursor-pointer dark:hover:text-gray-400"></i>
                             {% else %}
-                            <i
+                            <i onclick="toggleSaveMeme({{ meme.id }}, this)"
                                 class="far fa-heart mr-3 text-gray-400 hover:text-gray-600 dark:text-white hover:cursor-pointer dark:hover:text-gray-400"></i>
                             {% endif %}
                             <i
@@ -37,7 +37,7 @@
                                 class="far fa-paper-plane mr-3 text-gray-400 hover:text-gray-600 dark:text-white hover:cursor-pointer dark:hover:text-gray-400"></i>
                         </div>
                         <div>
-                            {% if current_user.is_authenticated %}
+                            {% if meme.saved_by_user(current_user.id) %}
                             <i
                                 class="fas fa-bookmark text-gray-400 hover:text-gray-600 dark:text-white hover:cursor-pointer dark:hover:text-gray-400"></i>
                             {% else %}
@@ -51,3 +51,21 @@
         </div>
     </div>
 </li>
+<script>
+    function toggleSaveMeme(memeId, element) {
+        fetch('/toggle_save_meme', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            body: `meme_id=${memeId}`
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    element.classList.toggle('fas');
+                    element.classList.toggle('far');
+                }
+            });
+    }
+</script>

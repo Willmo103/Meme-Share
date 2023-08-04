@@ -154,3 +154,75 @@ class User(db.Model, UserMixin):
         return (
             check_password_hash(os.getenv("ADMIN_PASSWORD"), password) and self.is_admin
         )
+
+    def get_id(self) -> str:
+        """
+        Get the id of the user.
+        @return: The id of the user.
+        """
+        return self.id
+
+    def get_username(self) -> str:
+        """
+        Get the username of the user.
+        @return: The username of the user.
+        """
+        return self.username
+
+    def get_email(self) -> str:
+        """
+        Get the email of the user.
+        @return: The email of the user.
+        """
+        return self.email
+
+    def get_password(self) -> str:
+        """
+        Get the password of the user.
+        @return: The password of the user.
+        """
+        return self.password
+
+    def get_memes(self) -> list:
+        """
+        Get the memes of the user.
+        @return: The memes of the user.
+        """
+        return self.memes
+
+    def get_saved_memes(self) -> list:
+        """
+        Get the saved memes of the user.
+        @return: The saved memes of the user.
+        """
+        return self.saved_memes
+
+    def get_is_admin(self) -> bool:
+        """
+        Get whether the user is an admin.
+        @return: Whether the user is an admin.
+        """
+        return self.is_admin
+
+    def get_comments(self) -> list:
+        """
+        Get the comments of the user.
+        @return: The comments of the user.
+        """
+        return self.comments
+
+    def unsave_meme(self, meme) -> None:
+        """
+        Unsave a meme from the user.
+        @param meme: a Meme instance.
+        @return: None
+        """
+        self.saved_memes.remove(meme)
+
+    def save_meme(self, meme: int) -> None:
+        """
+        Save a meme to the user.
+        @param meme: a Meme instance.
+        @return: None
+        """
+        self.saved_memes.append(meme)
