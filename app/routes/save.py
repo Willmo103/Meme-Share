@@ -22,3 +22,20 @@ def toggle_save_meme():
         db.session.commit()
 
     return jsonify(status='success')
+
+
+@endpoint.route('/toggle_like_meme', methods=['POST'])
+@login_required
+def toggle_like_meme():
+    meme_id = request.form.get('meme_id')
+    meme = Meme.query.get(meme_id)
+    user_id = current_user.id
+
+    if meme.liked_by_user(user_id):
+        User.query.get(user_id).unlike_meme(meme)
+        db.session.commit()
+    else:
+        User.query.get(user_id).like_meme(meme)
+        db.session.commit()
+
+    return jsonify(status='success')

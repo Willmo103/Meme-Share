@@ -24,11 +24,11 @@
                     </div>
                     <div class="p-4 flex justify-between items-center">
                         <div class="flex flex-row items-center">
-                            {% if meme.saved_by_user(current_user.id) %}
-                            <i onclick="toggleSaveMeme({{ meme.id }}, this)"
+                            {% if meme.liked_by_user(current_user.id) %}
+                            <i onclick="toggleLikeMeme({{ meme.id }}, this)"
                                 class="fas fa-heart mr-3 text-gray-400 hover:text-gray-600 dark:text-white hover:cursor-pointer dark:hover:text-gray-400"></i>
                             {% else %}
-                            <i onclick="toggleSaveMeme({{ meme.id }}, this)"
+                            <i onclick="toggleLikeMeme({{ meme.id }}, this)"
                                 class="far fa-heart mr-3 text-gray-400 hover:text-gray-600 dark:text-white hover:cursor-pointer dark:hover:text-gray-400"></i>
                             {% endif %}
                             <i
@@ -38,10 +38,10 @@
                         </div>
                         <div>
                             {% if meme.saved_by_user(current_user.id) %}
-                            <i
+                            <i onclick="toggleSaveMeme({{ meme.id }}, this)"
                                 class="fas fa-bookmark text-gray-400 hover:text-gray-600 dark:text-white hover:cursor-pointer dark:hover:text-gray-400"></i>
                             {% else %}
-                            <i
+                            <i onclick="toggleSaveMeme({{ meme.id }}, this)"
                                 class="far fa-bookmark text-gray-400 hover:text-gray-600 dark:text-white hover:cursor-pointer dark:hover:text-gray-400"></i>
                             {% endif %}
                         </div>
@@ -54,6 +54,23 @@
 <script>
     function toggleSaveMeme(memeId, element) {
         fetch('/toggle_save_meme', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            body: `meme_id=${memeId}`
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    element.classList.toggle('fas');
+                    element.classList.toggle('far');
+                }
+            });
+    }
+
+    function toggleLikeMeme(memeId, element) {
+        fetch('/toggle_like_meme', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded'

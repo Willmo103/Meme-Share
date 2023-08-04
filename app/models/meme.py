@@ -258,3 +258,7 @@ class Meme(db.Model):
     def saved_by_user(self, user_id: int) -> bool:
         """Check if a user has saved the meme."""
         return user_id in [user.id for user in self.saved_by]
+
+    def liked_by_user(self, user_id: int) -> bool:
+        """Check if a user has liked the meme."""
+        return user_id in [user.id for user in self.liked_by]

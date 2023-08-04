@@ -24,3 +24,9 @@ posted_comments = db.Table(
     db.Column("user_id", db.Integer, db.ForeignKey("user.id"), primary_key=True),
     db.Column("comment_id", db.Integer, db.ForeignKey("comment.id"), primary_key=True),
 )
+
+liked_memes = db.Table(
+    "liked_memes",
+    db.Column("user_id", db.Integer, db.ForeignKey("user.id"), primary_key=True),
+    db.Column("meme_id", db.Integer, db.ForeignKey("meme.id"), primary_key=True),
+)

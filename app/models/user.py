@@ -52,6 +52,13 @@ class User(db.Model, UserMixin):
         lazy="subquery",
         backref=db.backref("saved_by", lazy=True),
     )
+    liked_memes: Mapped[list] = db.relationship(
+        "Meme",
+        secondary="liked_memes",
+        lazy="subquery",
+        backref=db.backref("liked_by", lazy=True),
+    )
+
     is_admin: bool = db.Column(db.Boolean, nullable=False, default=False)
     comments: Mapped[list] = db.relationship(
         "Comment", backref="posted_comments", lazy=True
@@ -226,3 +233,27 @@ class User(db.Model, UserMixin):
         @return: None
         """
         self.saved_memes.append(meme)
+
+    def like_meme(self, meme) -> None:
+        """
+        Like a meme.
+        @param meme: a Meme instance.
+        @return: None
+        """
+        self.liked_memes.append(meme)
+
+    def unlike_meme(self, meme) -> None:
+        """
+        Unlike a meme.
+        @param meme: a Meme instance.
+        @return: None
+        """
+        self.liked_memes.remove(meme)
+
+    def liked_by_user(self, meme: int):
+        """
+        Check if the user has liked a meme.
+        @param meme: a Meme instance.
+        @return: True if the user has liked the meme, False otherwise.
+        """
+        return meme in self.liked_memes
