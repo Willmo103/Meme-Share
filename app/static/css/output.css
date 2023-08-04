@@ -1997,4 +1997,8 @@ video {
   .xl\:w-16 {
     width: 4rem;
   }
+
+  .xl\:w-full {
+    width: 100%;
+  }
 }
