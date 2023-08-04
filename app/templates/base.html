@@ -5,57 +5,143 @@
 <body class="dark:bg-black bg-white text-gray-900 dark:text-gray-100">
     <div class="flex flex-row">
         <!-- Left Sidebar (Navbar) -->
-        <nav
-            class="fixed top-0 left-0 bg-white dark:bg-black p-2 h-full w-1/3 md:w-1/4 lg:w-1/4 xl:w-1/4 border border-gray-600 overflow-auto">
+        <nav class="fixed top-0 left-0 bg-white dark:bg-black p-2 h-full sm:w-1/12 md:w-1/12 lg:w-1/12 xl:w-3/12 border border-r-2 border-gray-800  overflow-auto box-border ps-3 pt-2"
+            style="max-width: 256px;">
             <!-- Your navbar code here -->
-            <div class="container mx-auto flex flex-col items-start">
+            <div class="container flex flex-col leading-5">
                 <div
-                    class="flex flex-row w-full md:w-1/2 justify-start md:justify-start text-black dark:text-white ps-2 mb-1 mt-4 ms-2">
-                    <a class="flex items-center text-grey-600 dark:text-white no-underline hover:text-white hover:no-underline"
+                    class="block flex-shrink-0 w-full md:w-1/2 justify-start text-black dark:text-white mt-4 mb-6 items-start relative">
+
+                    <a class="block items-center text-black dark:text-white no-underline hover:text-gray-600 hover:no-underline md:hidden sm:hidden xl:block lg:block mt-2 px-3"
                         href="{{ url_for('routes.index_page') }}">
-                        <span class="text-3xl font-billabong">&nbsp;&nbsp;Intragram</span>
+                        <span class="text-4xl font-billabong font-light">Intragram</span>
+                    </a>
+
+                    <a class="items-center text-gray-600 dark:text-white no-underline hover:text-white hover:no-underline xl:hidden lg:hidden md:block sm:block hidden mt-2 px-3"
+                        href="{{ url_for('routes.index_page') }}">
+                        <span class="hidden dark:block "><img
+                                src="{{ url_for('static', filename='images/intragram_logo_darkmode.png') }}" width="24"
+                                height="24"> </span>
+                        <span class="block dark:hidden"><img
+                                src="{{ url_for('static', filename='images/intragram_logo_lightmode.png') }}" width="24"
+                                height="24"> </span>
                     </a>
                 </div>
-                <div class="flex w-full pt-2 mt-6 content-start justify-between md:w-1/2 md:justify-start">
+                <div class="block">
+                    <div class="block relative">
+                        <div class="block relative">
+                            <a href="" class="inline p-0 m-0"></a>
+                            <div
+                                class="my-1 p-3 w-full flex-row items-center inline-flex rounded-lg hover:bg-gray-200 dark:hover:bg-gray-900">
+                                <div class="block">
+                                    <div class="overflow-y-visible content-stretch rounded-none ">
+                                        <i
+                                            class="fas fa-home fa-lg text-gray-600 dark:text-white dark:hover:text-gray-600"></i>
+                                    </div>
+                                </div>
+                                <div class="flex h-6 w-fit items-center overflow-x-hidden ps-4">
+                                    <div class="w-full">
+                                        <div class="w-full">
+                                            <span
+                                                class="overflow-y-visible text-base m-0 break-words overflow-x-visible whitespace-pre-line max-w-full"></span>
+                                            <span
+                                                class="whitespace-nowrap text-ellipsis overflow-hidden block max-w-full">Home</span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="block flex-grow w-full pt-2 mt-6 content-start justify-between md:w-1/2 md:justify-start">
                     <ul class="flex flex-col justify-between md:flex-none items-center">
                         <!-- Check if user is authenticated -->
                         {% if current_user.is_authenticated %}
-                        <li class="flex flex-row w-full justify-between my-2">
+
+                        <!-- fullscreen -->
+                        <li class="flex flex-row w-full justify-between my-2 md:hidden sm:hidden xl:block lg:hidden ">
                             <a class="text-grey-600 dark:text-white no-underline hover:text-gray-300 hover:text-underline py-2 px-4 text-1xl font-semibold"
                                 href="#"><span class="mr-2"><i class="fas fa-home mr-1 nav-icon ms-2"
                                         style="width:24px; height:21px;"></i></span>Home</a>
                         </li>
-                        <li class="flex flex-row w-full justify-between my-2">
-                            <a class="text-grey-600 dark:text-white no-underline hover:text-gray-300 hover:text-underline py-3 px-4 text-1xl font-semibold"
+                        <!-- icon -->
+                        <li class="hidden lg:block xl:hidden  md:block sm:block flex-row w-full justify-between my-2">
+                            <a class="text-gray-600 dark:text-white no-underline hover:text-gray-300 hover:text-underline py-2 px-4 text-1xl font-semibold"
+                                href="#"><i class="fas fa-home mr-1 nav-icon ms-2"
+                                    style="width:24px; height:21px;"></i></a>
+                        </li>
+
+                        <!-- fullscreen -->
+                        <li class="flex flex-row w-full justify-between my-2 md:hidden sm:hidden xl:block lg:hidden">
+                            <a class="text-gray-600 dark:text-white no-underline hover:text-gray-300 hover:text-underline py-3 px-4 text-1xl font-semibold"
                                 href="#"><span class="mr-2"><i class="far fa-bookmark mr-1 nav-icon ms-2"
                                         style="width:24px; height:21px;"></i></span>Saved</a>
                         </li>
-                        <li class="flex flex-row w-full justify-start my-2">
-                            <a class="text-grey-600 dark:text-white no-underline hover:text-gray-200 hover:text-underline py-2 px-4 text-1xl font-semibold"
+
+                        <!-- icon -->
+                        <li class="hidden lg:block xl:hidden  md:block sm:block w-full justify-between my-2">
+                            <a class="text-gray-600 dark:text-white no-underline hover:text-gray-300 hover:text-underline py-3 px-4 text-1xl font-semibold"
+                                href="#"><i class="far fa-bookmark mr-1 nav-icon ms-2"
+                                    style="width:24px; height:21px;"></i></a>
+                        </li>
+
+                        <!-- fullscreen -->
+                        <li class="flex flex-row w-full justify-start my-2 md:hidden sm:hidden xl:block lg:hidden">
+                            <a class="text-gray-600 dark:text-white no-underline hover:text-gray-200 hover:text-underline py-2 px-4 text-1xl font-semibold"
                                 href="{{url_for('routes.logout')}}">
                                 <span class="mr-2"><i class="fa-solid fa-right-from-bracket nav-icon ms-2"
                                         style="width:24px; height:21px;"></i></span>Logout</a>
                         </li>
-                        <li class="flex flex-row w-full justify-start my-2">
-                            <a class="text-grey-600 dark:text-white no-underline hover:text-gray-200 hover:text-underline py-2 px-4 text-1xl font-semibold"
+
+                        <!-- icon -->
+                        <li class="hidden lg:block xl:hidden  md:block sm:block w-full justify-start my-2">
+                            <a class="text-gray-600 dark:text-white no-underline hover:text-gray-200 hover:text-underline py-2 px-4 text-1xl font-semibold"
+                                href="{{url_for('routes.logout')}}">
+                                <i class="fa-solid fa-right-from-bracket nav-icon ms-2"
+                                    style="width:24px; height:21px;"></i></a>
+                        </li>
+
+                        <!-- fullscreen -->
+                        <li class="flex flex-row w-full justify-start my-2 md:hidden sm:hidden xl:block lg:hidden">
+                            <a class="text-gray-600 dark:text-white no-underline hover:text-gray-200 hover:text-underline py-2 px-4 text-1xl font-semibold"
                                 class="nav-link" href="#" id="upload">
                                 <span class="mr-2"><i class="fa-solid fa-arrow-up-from-bracket nav-icon ms-2"
                                         style="width:24px; height:21px;"></i></span>Upload</a>
                         </li>
+
+                        <!-- icon -->
+                        <li class="hidden lg:block xl:hidden  md:block sm:block w-full justify-start my-2">
+                            <a class="text-gray-600 dark:text-white no-underline hover:text-gray-200 hover:text-underline py-2 px-4 text-1xl font-semibold"
+                                class="nav-link" href="#" id="uploadIcon">
+                                <i class="fa-solid fa-arrow-up-from-bracket nav-icon ms-2"
+                                    style="width:24px; height:21px;"></i></a>
+                        </li>
+
                         {% else %}
-                        <li class="flex flex-row w-full justify-start my-2">
+
+                        <!-- fullscreen -->
+                        <li class="flex flex-row w-full justify-start my-2 md:hidden sm:hidden xl:block lg:hidden">
+                            <a class="text-grey-600 dark:text-white no-underline hover:text-gray-200 hover:text-underline py-2 px-4 text-1xl font-semibold"
+                                class="nav-link" href="{{ url_for('routes.login') }}"><span><i
+                                        class="fa-solid fa-arrow-right-to-bracket"></i></span>Sign In</a>
+                        </li>
+
+                        <!-- icon -->
+                        <li class="hidden lg:block xl:hidden  md:block sm:block flex-row w-full justify-start my-2">
                             <a class="text-grey-600 dark:text-white no-underline hover:text-gray-200 hover:text-underline py-2 px-4 text-1xl font-semibold"
                                 class="nav-link" href="{{ url_for('routes.login') }}">Sign In</a>
                         </li>
+
                         {% endif %}
                     </ul>
                 </div>
             </div>
         </nav>
-        <div class="top-0 left-0 bg-white dark:bg-black p-2 h-full w-1/3 md:w-1/4 lg:w-1/4 xl:w-1/4 overflow-auto">
-        </div>
         <div
-            class="flex-col col-span-10 flex ms-1/3 md:ms-1/4 lg:ms-1/4 xl:ms-1/4 w-2/3 md:w-3/4 lg:w-3/4 xl:w-3/4 overflow-auto">
+            class="top-0 left-0 bg-white dark:bg-black p-2 h-full sm:w-1/12 md:w-1/12 lg:w-1/12  xl:w-3/12 overflow-auto">
+        </div>
+        <div class="flex-col flex w-8/12 md:w-11/12 lg:w-8/12 xl:w-8/12 overflow-auto">
             <!-- Main Content -->
             {% block content %}{% endblock %}
         </div>
@@ -73,7 +159,6 @@
             </div>
         </div>
         <script>
-            // Get the modal
             var modal = document.getElementById("full_screen_modal");
 
             window.addEventListener("scroll", function (event) {
@@ -84,6 +169,7 @@
 
             // Get the button that opens the modal
             var uploadBtn = document.getElementById("upload");
+            var uploadIcon = document.getElementById("uploadIcon");
 
             // Get the <span> element that closes the modal
             var span = document.getElementById("close_full_screen_modal");
@@ -97,15 +183,21 @@
                 while (modal.classList.contains("hidden")) {
                     window.scrollTo(0, 0);
                 }
-            }
+            };
+
+            uploadIcon.onclick = function () {
+                modalContent.innerHTML = `{% include 'upload_meme.html' %}`;
+                modal.classList.remove("hidden");
+                while (modal.classList.contains("hidden")) {
+                    window.scrollTo(0, 0);
+                }
+            };
 
             // When the user clicks on <span> (x), close the modal
             span.onclick = function () {
                 modal.classList.add("hidden");
                 modalContent.innerHTML = "";
-            }
-
-
+            };
 
         </script>
 </body>

@@ -1,6 +1,7 @@
 from flask import redirect, url_for, render_template
 from flask_login import current_user
 from . import endpoint
+from app.models import Meme
 import os
 
 
@@ -9,10 +10,11 @@ import os
 def index_page():
     if not current_user.is_authenticated:
         return redirect(url_for("routes.login"))
-    else:
-        user_id = None
+    user_id = current_user.id
+    memes = Meme.query.filter_by(deleted=False).all()
     return render_template(
         "index.html",
         user_id=user_id,
         title="Intragram",
+        memes=memes
     )

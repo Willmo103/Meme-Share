@@ -8,12 +8,3 @@
 }
 
 @import 'fontawesome-free/css/all.css';
-
-
-
-.fixed-sidebar {
-    position: fixed;
-    height: 100%;
-    overflow-y: auto;
-    overflow-x: hidden;
-}

@@ -9,6 +9,7 @@ import os, requests, uuid
 from io import BytesIO
 from werkzeug.datastructures import FileStorage
 from app import conf
+from . import User
 
 _upload_folder = conf.UPLOADS_FOLDER
 _thumb_folder = conf.THUMBNAILS_FOLDER
@@ -60,6 +61,7 @@ class Meme(db.Model):
     comments: Mapped[list] = db.relationship(
         "Comment", backref="meme", lazy=True, cascade="all, delete-orphan"
     )
+
 
     def __init__(self, posted_by: int, filename: str, private: bool) -> None:
         """
@@ -177,6 +179,11 @@ class Meme(db.Model):
     def update(self) -> None:
         """Update the meme in the database."""
         db.session.commit()
+
+    def get_username(self) -> str:
+        """Get the username of the user who posted the meme."""
+        return User.query.get(self.posted_by).get_username()
+
 
     @classmethod
     def from_url(cls, url: str, posted_by: int, private: bool):
