@@ -12,6 +12,18 @@ def user():
     return render_template("user_page.html")
 
 
+@endpoint.route("/user/image", methods=["GET", "POST"])
+def choose_profile_image():
+
+    if request.method == "POST":
+        image = request.files["file"]
+        current_user.set_profile_image(image)
+        return redirect(url_for("endpoint.user"))
+    if request.method == "GET":
+
+        return render_template("set_image.html")
+
+
 @endpoint.route("/user/<int:id>", methods=["GET"])
 @login_required
 def user_id(id):

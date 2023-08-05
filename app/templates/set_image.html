@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+{% include 'head.html' %}
+
+<body class="dark:bg-black bg-white text-gray-900 dark:text-gray-100 flex flex-row items-center justify-center h-full">
+
+    <div class="h-full mt-16 py-4 w-auto bg-white dark:bg-black flex flex-col justify-center items-center">
+        <div
+            class="bg-white dark:bg-black border rounded border-gray-300 dark:border-gray-600 w-80 py-6 flex flex-col items-center mb-3 mt-3">
+            <h1 class="text-4xl font-billabong text-black dark:text-white mb-2">Choose Profile Image</h1>
+
+            <form class="mt-8 w-auto flex flex-col mb-2" action="{{ url_for('routes.choose_profile_image') }}"
+                method="POST" enctype="multipart/form-data">
+
+                <input type="file" name="user_image" class="text-xs w-full mb-2 rounded border bg-white dark:bg-gray-700 border-gray-300
+                dark:border-black px-2 py-2
+                focus:outline-none
+                focus:border-gray-400 active:outline-none text-black dark:text-gray-300" accept="image/*" />
+
+                <button type="submit" class="text-sm text-center bg-blue-300 dark:bg-gray-400 text-white dark:text-gray-900
+                py-1
+                mt-2
+                rounded font-medium">
+                    Upload
+                </button>
+
+            </form>
+
+            <p class="text-gray-500 dark:text-gray-300 mt-4 mb-2">Or choose from default images:</p>
+
+            <div class="flex flex-wrap justify-center">
+                {% for image in default_images %}
+                <a href="{{ url_for('routes.set_default_image', image_id=image.id) }}" class="p-2">
+                    <img src="{{ url_for('static', filename=image.filename) }}" class="w-16 h-16 rounded"
+                        alt="{{ image.description }}">
+                </a>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

@@ -9,32 +9,12 @@ class Group(db.Model):
     """
     Create a Group model.
 
-    This model should have the following attributes:
-    - id (int, primary key)
-    - name (str, not nullable)
-    - owner (int, foreign key to user.id)
-    - private (bool, not nullable, default=False)
-    - members (list, secondary="group_members", lazy="subquery", backref=db.backref("groups", lazy=True))
-    - memes (list, backref="group", lazy=True)
-
-    This model should have the following methods:
-    - __init__ (instantiate an object of the class)
-    - __repr__ (return a string representation of the object)
-    - save (save the group to the database)
-    - delete (delete the group from the database)
-    - is_private (check if the group is private)
-    - set_private (set the group as private)
-    - set_name (set the name of the group)
-    - add_member (add a member to the group)
-    - remove_member (remove a member from the group)
-    - is_member (check if a user is a member of the group)
-    - is_owner (check if a user is the owner of the group)
-    - get_owner (get the owner of the group)
-    - get_members (get the members of the group)
-    - get_memes (get the memes of the group)
-    - get_name (get the name of the group)
-    - get_id (get the id of the group)
-    - get_private (get the privacy of the group)
+    @field id: The id of the group.
+    @field name: The name of the group.
+    @field memes: The memes in the group.
+    @field owner: The owner of the group.
+    @field private: Whether the group is private.
+    @field members: The members of the group.
     """
 
     id: int = db.Column(db.Integer, primary_key=True)
@@ -67,22 +47,6 @@ class Group(db.Model):
         @return: A string representation of the object.
         """
         return f"Group('{self.id}', '{self.name}')"
-
-    def save(self) -> None:
-        """
-        Save the group to the database.
-        @return: None
-        """
-        db.session.add(self)
-        db.session.commit()
-
-    def delete(self) -> None:
-        """
-        Delete the group from the database.
-        @return: None
-        """
-        db.session.delete(self)
-        db.session.commit()
 
     def is_private(self) -> bool:
         """

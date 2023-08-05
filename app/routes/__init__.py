@@ -35,3 +35,11 @@ from .save import (
     toggle_save_meme as toggle_save_meme,
     toggle_like_meme as toggle_like_meme,
 )
+from .user import (
+    user as user,
+    choose_profile_image as choose_profile_image,
+    user_id as user_id,
+    new_user as new_user,
+    edit_user as edit_user,
+    delete_user as delete_user,
+)
