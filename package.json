@@ -1,10 +1,13 @@
 {
   "scripts": {
     "css_build": "tailwindcss -i ./app/static/css/styles.css -o ./app/static/css/output.css",
-    "css_watch": "tailwindcss -i ./app/static/css/styles.css -o ./app/static/css/output.css --watch"
+    "css_watch": "tailwindcss -i ./app/static/css/styles.css -o ./app/static/css/output.css --watch",
+    "start_dev": "./.venv/scripts/activate && python run.py",
+    "start_prod": "python app.py --prod"
   },
   "devDependencies": {
-    "tailwindcss": "^3.3.3",
-    "sharp": "^0.32.4"
+    "chokidar": "^3.5.3",
+    "sharp": "^0.32.4",
+    "tailwindcss": "^3.3.3"
   }
 }
