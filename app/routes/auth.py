@@ -44,6 +44,6 @@ def register():
             password=form.password.data,
         )
         user.save()
-        flash(f"New user {form.username.data} has been created!")
-        return redirect(url_for("routes.login"))
+        id = User.query.filter_by(username=form.username.data).first().id
+        return redirect(url_for("routes.choose_profile_image", id=id))
     return render_template("new_user.html", title="Register", form=form)

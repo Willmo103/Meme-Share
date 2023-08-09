@@ -63,6 +63,9 @@ class User(db.Model, UserMixin):
     comments: Mapped[list] = db.relationship(
         "Comment", backref="posted_comments", lazy=True
     )
+    profile_image: str = db.Column( # the name of the image file
+        db.String(100), nullable=False, default="default.jpg"
+    )
 
     def __init__(self, username: str, email: str, password: str) -> None:
         """
@@ -80,6 +83,14 @@ class User(db.Model, UserMixin):
     def __repr__(self) -> str:
         """Return a string representation of the object."""
         return f"User('{self.id}', '{self.username}')"
+
+    def set_profile_image(self, image: str) -> None:
+        """
+        Set the profile image of the user.
+        @param image: The image of the user.
+        @return: None
+        """
+        self.profile_image = image
 
     def set_password(self, password: str) -> None:
         """Set the password of the user.

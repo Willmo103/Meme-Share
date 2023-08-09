@@ -1,3 +1,4 @@
+import os
 from flask import render_template, redirect, url_for, flash, Response, request
 from flask_login import current_user, login_required
 from app import db
@@ -12,16 +13,22 @@ def user():
     return render_template("user_page.html")
 
 
-@endpoint.route("/user/image", methods=["GET", "POST"])
-def choose_profile_image():
-
+@endpoint.route("/user/image/", defaults={"id": None}, methods=["GET", "POST"])
+@endpoint.route("/user/image/<int:id>", methods=["GET", "POST"])
+def choose_profile_image(id):
     if request.method == "POST":
-        image = request.files["file"]
-        current_user.set_profile_image(image)
+        image = request.args.get("file")
+        user = User.query.get_or_404(id)
+        user.set_profile_image(image)
+        if request.endpoint  == "endpoint.choose_profile_image":
+            return redirect(url_for("endpoint.login"))
         return redirect(url_for("endpoint.user"))
     if request.method == "GET":
-
-        return render_template("set_image.html")
+        default_images = [
+            image for image in os.listdir("app/static/images/default_images")
+        ]
+        print(default_images)
+        return render_template("set_image.html", default_images=default_images, id=id)
 
 
 @endpoint.route("/user/<int:id>", methods=["GET"])
@@ -29,19 +36,6 @@ def choose_profile_image():
 def user_id(id):
     user = User.query.get_or_404(id)
     return render_template("user.html", user=user)
-
-
-@endpoint.route("/user/new", methods=["POST"])
-def new_user():
-    form = RegistrationForm()
-    if form.validate_on_submit():
-        user = User(username=form.username.data, email=form.email.data)
-        user.set_password(form.password.data)
-        db.session.add(user)
-        db.session.commit()
-        flash("Congratulations, you are now a registered user!")
-        return redirect(url_for("endpoint.login"))
-    return redirect(url_for("endpoint.login"))
 
 
 @endpoint.route("/user/<int:id>/edit", methods=["GET", "POST"])
