@@ -11,14 +11,14 @@ from werkzeug.utils import secure_filename
 @login_required
 def get_meme(meme_id):
     meme = Meme.query.get_or_404(meme_id)
-    return render_template("view_meme.html", meme=meme)
+    return render_template("view_meme.jinja", meme=meme)
 
 
 @endpoint.route("/meme/<int:page>", methods=["GET"])
 @login_required
 def get_memes(page):
     memes = Meme.query.paginate(page=page, per_page=10)
-    return render_template("meme.html", memes=memes)
+    return render_template("meme.jinja", memes=memes)
 
 
 @endpoint.route("/meme/upload", methods=["POST"])

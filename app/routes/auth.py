@@ -1,4 +1,4 @@
-from flask import render_template, redirect, url_for, flash, Response
+from flask import render_template, redirect, url_for, flash, Response, request
 from flask_login import current_user, login_user, logout_user
 from app.models import User
 from app.forms import LoginForm, RegistrationForm
@@ -23,7 +23,7 @@ def login():
             return redirect(url_for("routes.login"))
         login_user(user, remember=form.remember_me.data)
         return redirect(url_for("routes.index_page"))
-    return render_template("login.html", title="Sign In", form=form)
+    return render_template("login.jinja", title="Sign In", form=form)
 
 
 @endpoint.route("/logout")
@@ -45,5 +45,16 @@ def register():
         )
         user.save()
         id = User.query.filter_by(username=form.username.data).first().id
-        return redirect(url_for("routes.choose_profile_image", id=id))
-    return render_template("new_user.html", title="Register", form=form)
+        return redirect(url_for("routes.first_login", id=id))
+    return render_template("new_user.jinja", title="Register", form=form)
+
+@endpoint.route("/first_login/<int:id>", methods=["GET", "POST"])
+def first_login(id):
+    if request.endpoint == "endpoint.register":
+        user = User.query.get_or_404(id)
+        success = login_user(user)
+        if success:
+            return redirect(url_for("routes.choose_profile_image"))
+        return redirect(url_for("routes.login"))
+    else:
+        return redirect(url_for("routes.login"))

@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-{% include 'head.html' %}
+{% include 'head.jinja' %}
 
 <body class="dark:bg-black bg-white text-gray-900 dark:text-gray-100">
     <div class="flex flex-row">
@@ -241,7 +241,7 @@
 
         // When the user clicks the button, open the modal
         uploadBtn.onclick = function () {
-            modalContent.innerHTML = `{% include 'upload_meme.html' %}`;
+            modalContent.innerHTML = `{% include 'upload_meme.jinja' %}`;
             modal.classList.remove("hidden");
             while (modal.classList.contains("hidden")) {
                 window.scrollTo(0, 0);

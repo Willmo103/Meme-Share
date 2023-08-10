@@ -13,5 +13,5 @@ def index_page():
     user_id = current_user.id
     memes = Meme.query.filter_by(deleted=False).all()
     return render_template(
-        "index.html", user_id=user_id, title="Intragram", memes=memes
+        "index.jinja", user_id=user_id, title="Intragram", memes=memes
     )
