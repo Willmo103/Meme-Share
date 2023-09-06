@@ -63,7 +63,7 @@ class User(db.Model, UserMixin):
     comments: Mapped[list] = db.relationship(
         "Comment", backref="posted_comments", lazy=True
     )
-    profile_image: str = db.Column( # the name of the image file
+    profile_image: str = db.Column(  # the name of the image file
         db.String(100), nullable=False, default="default.jpg"
     )
 

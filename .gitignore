@@ -5,3 +5,4 @@ __pycache__
 *.log
 *dev*
 node_modules/
+/uploads
