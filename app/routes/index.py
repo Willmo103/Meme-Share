@@ -10,6 +10,8 @@ import os
 def index_page():
     if not current_user.is_authenticated:
         return redirect(url_for("routes.login"))
+    elif not current_user.profile_image:
+        return redirect(url_for("routes.choose_profile_image", img=None))
     user_id = current_user.id
     memes = Meme.query.filter_by(deleted=False).all()
     return render_template(

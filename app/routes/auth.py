@@ -27,7 +27,7 @@ def login():
 
 
 @endpoint.route("/logout")
-def logout() -> Response:
+def logout():
     logout_user()
     return redirect(url_for("routes.index_page"))
 
@@ -44,17 +44,5 @@ def register():
             password=form.password.data,
         )
         user.save()
-        id = User.query.filter_by(username=form.username.data).first().id
-        return redirect(url_for("routes.first_login", id=id))
+        return redirect(url_for("routes.login"))
     return render_template("new_user.jinja", title="Register", form=form)
-
-@endpoint.route("/first_login/<int:id>", methods=["GET", "POST"])
-def first_login(id):
-    if request.endpoint == "endpoint.register":
-        user = User.query.get_or_404(id)
-        success = login_user(user)
-        if success:
-            return redirect(url_for("routes.choose_profile_image"))
-        return redirect(url_for("routes.login"))
-    else:
-        return redirect(url_for("routes.login"))
